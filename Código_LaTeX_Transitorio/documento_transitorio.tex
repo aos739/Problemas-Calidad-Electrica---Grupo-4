@@ -1,0 +1,1562 @@
+\documentclass[12pt,a4paper]{article}
+
+% Paquetes esenciales
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tcolorbox}
+\usepackage{cancel}
+\definecolor{azulalmeria}{RGB}{0,51,102}
+\tcbset{enunciado/.style={colback=blue!5!white, colframe=azulalmeria, fonttitle=\bfseries}}
+
+
+\usepackage{siunitx}
+\usepackage{circuitikz}
+\usepackage{enumitem}
+\usepackage{amsmath}
+
+% Configuración de geometría
+\geometry{
+    left=2.5cm,
+    right=2.5cm,
+    top=3cm,
+    bottom=3cm
+}
+
+% Colores personalizados
+\definecolor{azulalmeria}{RGB}{0,69,124}
+\definecolor{grisclaro}{RGB}{245,245,245}
+
+% Configuración de hipervínculos
+\hypersetup{
+    colorlinks=true,
+    linkcolor=azulalmeria,
+    citecolor=azulalmeria,
+    urlcolor=azulalmeria
+}
+
+% Configuración de encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Problemas Transitorios - Grupo 4}
+\fancyhead[R]{\small\thepage}
+\fancyfoot[C]{\small Máster en Ingeniería Industrial -- 2025/2026}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrule}{\color{azulalmeria}\hrule width\headwidth height\headrulewidth \vskip-\headrulewidth}
+\renewcommand{\footrule}{\vskip-\footruleskip\vskip-\footrulewidth\color{azulalmeria}\hrule width\headwidth height\footrulewidth\vskip\footruleskip}
+
+% Configuración de siunitx
+\sisetup{
+    output-decimal-marker = {,},
+    group-separator = {.}
+}
+
+\setlength{\headheight}{13.99998pt}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+\renewcommand{\thesubsubsection}{\alph{subsubsection})}
+
+
+
+% Añade esto al preámbulo (después de cargar tcolorbox)
+\tcbset{
+    solucion/.style={
+        colback=blue!3,           % Fondo azul clarito
+        colframe=azulalmeria,      % Borde azul almería
+        fonttitle=\bfseries,
+        arc=4mm,                   % Bordes redondeados
+        boxrule=1pt,            % Grosor del borde
+        left=5pt,
+        right=5pt,
+        top=5pt,
+        bottom=5pt
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% Portada
+\begin{titlepage}
+    \centering
+    
+    \vspace*{1cm}
+    \includegraphics[width=0.4\textwidth]{Escudo_UAL.png}
+    
+    \vspace{1.5cm}
+    
+    {\LARGE\bfseries\color{azulalmeria} Listado de Problemas Transitorios\par}
+    \vspace{0.2cm}
+
+\begin{center}
+\url{https://github.com/aos739/Problemas-Transitorios---Grupo-4}
+\end{center}
+      \vspace{0.2cm}  
+    {\Large Grupo 4\par}
+    
+    \vspace{2cm}
+    
+    {\large\textbf{Autoras:}\par}
+    \vspace{0.5cm}
+    {\large Ángela Otero Sánchez\par}
+    {\normalsize aos739@inlumine.ual.es\par}
+    \vspace{0.5cm}
+    {\large Silvia Rozas Teruel\par}
+    {\normalsize srt775@inlumine.ual.es\par}
+    
+    \vfill
+    
+    {\large\textbf{Asignatura:} Itinerario de Eléctrica\par}
+    {\large\textbf{Máster en Ingeniería Industrial}\par}
+    \vspace{0.3cm}
+    {\large\color{azulalmeria}\textbf{Universidad de Almería}\par}
+    \vspace{0.3cm}
+    {\large Curso 2025/2026\par}
+    
+\end{titlepage}
+
+\newpage
+
+	\section{Problemas Teóricos}
+	
+	\subsection{Problema 1}
+	
+	\begin{tcolorbox}[enunciado, title={Problema 1}]
+		Considere un circuito RL con $R = \SI{220}{\ohm}$ y $L = \SI{20}{\milli\henry}$. 
+		En $t = 0$, se conecta una fuente de tensión continua de \SI{9}{\volt} al circuito.
+		
+		\medskip
+		
+		\textbf{a)} ¿Cuál es la constante de tiempo de este circuito?
+		
+		\medskip
+		
+		\textbf{b)} Dibuje la curva de respuesta de corriente, etiquetando los puntos clave.
+		
+		\medskip
+		
+		\textbf{c)} ¿Cuánto tiempo tarda la corriente en alcanzar el 80\%?
+	\end{tcolorbox}
+	
+	En primer lugar, analizando el problema, se hace una representación del mismo, con el fin de hacerlo más visual:
+	
+\begin{center}
+    \resizebox{0.5\textwidth}{!}{
+        \begin{circuitikz}
+            % Fuente invertida, interruptor, resistencia e inductor
+            \draw
+            (0,0) to[battery1, l_={$9\,\text{V}$}, invert] (0,3)
+            to[closing switch, l_={$t=0$}] (2,3)
+            to[R, l_={$220\,\Omega$}, i_={$i(t)$}] (5,3)
+            to[L, l_={$20\,\text{mH}$}] (5,0)
+            -- (0,0);
+        \end{circuitikz}
+    }
+\end{center}
+
+	
+	
+	\subsubsection{¿Cuál es la constante de tiempo de este circuito?}
+	
+	Antes de alcanzar el régimen permanente, el circuito atraviesa un periodo transitorio durante el cual las tensiones e intensidades varían con el tiempo. Conociendo las expresiones que relacionan tensión y corriente de cada uno de los elementos del circuito:
+	
+	\begin{align}
+		v_R(t) &= R \cdot i(t) \quad \text{(Resistencia)} \\
+		v_L(t) &= L\frac{di(t)}{dt} \quad \text{(Bobina)}
+	\end{align}
+	
+	y al aplicar las leyes de Kirchhoff, se obtienen ecuaciones integro-diferenciales de primer o segundo orden, en función de los elementos almacenadores de energía de los que esté dotado el circuito.
+	
+	\vspace{0.3cm}
+	
+	Teniendo en cuenta que en este circuito solo hay un elemento almacenador de energía (la bobina), se trata de un sistema de primer orden, cuya evolución de la tensión está descrita por la siguiente expresión:
+	
+	\begin{equation}
+		U_G(t) = U_R(t) + U_L(t)
+	\end{equation}
+	
+	Sustituyendo en la expresión anterior las correspondientes relaciones tensión-corriente de cada elemento, se obtiene la siguiente expresión:
+	
+	\begin{equation}
+		U_G(t) = R \cdot i(t) + L\frac{di(t)}{dt}
+	\end{equation}
+	
+	Dividiendo toda la ecuación entre $L$:
+	
+	\begin{equation}
+		\frac{U_G(t)}{L} = \frac{R}{L}i(t) + \frac{di(t)}{dt}
+	\end{equation}
+	
+	Reordenando términos:
+	
+	\begin{equation}
+		\frac{di(t)}{dt} + \frac{R}{L}i(t) = \frac{U_G(t)}{L}
+	\end{equation}
+	
+	Sabiendo que una ecuación diferencial de primer orden tiene la siguiente forma general:
+	
+	\begin{equation}
+		a\frac{df(t)}{dt} + bf(t) = g(t) \quad \longrightarrow \quad \frac{df(t)}{dt} + \frac{f(t)}{\tau} = h(t)
+	\end{equation}
+	
+	donde:
+	\begin{itemize}
+		\item $\tau = \dfrac{a}{b}$ es la constante de tiempo
+		\item $h(t) = \dfrac{g(t)}{a}$ es la función de entrada normalizada
+	\end{itemize}
+	
+	Comparando con la expresión obtenida para este circuito, se puede identificar que:
+	
+	\begin{equation}
+		\frac{1}{\tau} = \frac{R}{L} \quad \Rightarrow \quad \tau = \frac{L}{R}
+	\end{equation}
+	
+	Sustituyendo los valores numéricos del circuito, se determina que la constante de tiempo es:
+	
+	\begin{equation}
+		\tau = \frac{20 \times 10^{-3}}{220} = 90{,}91 \times 10^{-6}\ \text{s} = \SI{90,91}{\micro\second}
+	\end{equation}
+	
+	\vspace{0.3cm}
+	
+% ========== PROBLEMA 1 - Apartado a) ==========
+\begin{center}
+    \begin{tcolorbox}[solucion, width=0.7\textwidth]
+        \centering
+        \textbf{Solución:} $\tau = \SI{90,91}{\micro\second}$
+    \end{tcolorbox}
+\end{center}
+	
+	\vspace{0.3cm}
+	
+	La \textbf{constante de tiempo} $\tau$ representa el tiempo característico que tarda la corriente en alcanzar aproximadamente el \SI{63,2}{\percent} de su valor final en un circuito de primer orden. Este parámetro determina la rapidez de respuesta del sistema: cuanto mayor sea $\tau$, más lento será el transitorio; cuanto menor sea $\tau$, más rápidamente el circuito alcanzará su estado estacionario.
+	
+	\vspace{0.3cm}
+	
+	Por otro lado, esta constante también puede determinarse de forma muy sencilla mediante el \textbf{método de Laplace}. Aplicando la transformada de Laplace a la ecuación diferencial del circuito RL:
+	
+	\begin{equation}
+		U_G(s) = R\,I(s) + sL\,I(s)
+	\end{equation}
+	
+	y despejando la función de transferencia:
+	
+	\begin{equation}
+		\frac{I(s)}{U_G(s)} = \frac{1}{R + sL} = \frac{\tfrac{1}{R}}{1 + s\dfrac{L}{R}}
+	\end{equation}
+	
+	Comparando con la forma general de una función de primer orden:
+	
+	\begin{equation}
+		H(s) = \frac{K}{1 + s\tau}
+	\end{equation}
+	
+	se puede identificar directamente que:
+	
+\begin{equation}
+\tau = \frac{L}{R}= \frac{20 \times 10^{-3}}{220} = 90{,}91 \times 10^{-6}\ \text{s} = \SI{90,91}{\micro\second}
+\end{equation}
+
+\vspace{0.3cm}
+	lo que confirma el mismo resultado obtenido mediante el método diferencial.
+	
+	
+	
+	
+	\subsubsection{Dibuje la curva de respuesta de corriente, etiquetando los puntos clave}
+	
+	
+	Aplicando la ley de Kirchhoff de tensiones (KVL), se obtiene la siguiente expresión:
+	
+	\begin{equation}
+		L\frac{di(t)}{dt} + R \cdot i(t) = V(t)
+	\end{equation}
+	
+	Antes de resolver la ecuación diferencial, se establecen las \textbf{condiciones iniciales}. En este caso, se indica que en el instante $t = 0$ se conecta la fuente de tensión, y la corriente inicial en la bobina es nula, es decir, $i(0) = 0\ \text{A}$, ya que la corriente en un inductor no puede cambiar instantáneamente. Este aspecto se abordará con mayor detalle en el \textbf{Ejercicio 3}, donde se explicará el comportamiento inicial de los elementos almacenadores de energía ($L$ y $C$).
+	
+	\vspace{0.3cm}
+	
+	La \textbf{solución completa} de una ecuación diferencial de primer orden se compone de dos términos: la \textbf{respuesta natural} o libre, y la \textbf{respuesta forzada} o particular.  
+	\begin{itemize}
+		\item La respuesta \textbf{natural} representa el comportamiento del circuito cuando se anulan las fuentes, y depende únicamente de la energía almacenada en los elementos inductivos o capacitivos.
+		\item La respuesta \textbf{forzada} corresponde al efecto de las fuentes externas aplicadas al circuito.
+	\end{itemize}
+	
+	\vspace{0.3cm}
+	
+	Al aplicar la KVL y normalizar la ecuación diferencial se obtiene:
+	
+	\begin{equation}
+		\frac{di(t)}{dt} + \frac{R}{L}i(t) = \frac{u(t)}{L}
+	\end{equation}
+	
+	\textbf{1. Solución homogénea (respuesta natural).} Se anulan las fuentes (lado derecho = 0) y se resuelve:
+	
+	\begin{equation}
+		\frac{di_h(t)}{dt} + \frac{R}{L}i_h(t) = 0
+	\end{equation}
+	
+	Se despejan las variables:
+	
+	\begin{equation}
+		\frac{di_h(t)}{dt} + \frac{R}{L}i_h(t) = 0 \quad \xrightarrow{\text{despeje}} \quad \frac{1}{i_h(t)}\,di_h(t) = -\frac{R}{L}\,dt
+	\end{equation}
+	
+	Se integra conociendo que $\int\frac{1}{i_h(t)} = \ln|i_h(t)|$ y se obtiene lo siguiente:
+	
+	\begin{align}
+		\int\frac{1}{i_h(t)}\,di_h(t) &= -\frac{R}{L}\int dt \\
+		\ln|i_h(t)| &= -\frac{R}{L}t + C
+	\end{align}
+	
+	Finalmente, empleando las propiedades de la función exponencial, se resuelve la expresión:
+	
+	\begin{equation}
+		\ln|i_h(t)| = -\frac{R}{L}t + C \quad \Longrightarrow \quad i_h(t) = C_1 e^{-\frac{R}{L}t}
+	\end{equation}
+	
+	Por tanto, la solución homogénea de un sistema de primer orden de forma general, tendrá esta estructura.:
+	
+	\begin{equation}
+		i_h(t) = C_1 e^{\lambda t}
+	\end{equation}
+	
+	En este caso, sustituyendo los valores numéricos $R=\SI{220}{\ohm}$ y $L=\SI{20}{\milli\henry}$, se obtiene:
+	
+	\begin{equation}
+		\lambda = -\frac{R}{L} = -\frac{220}{20 \times 10^{-3}} = -11000\ \text{rad/s}
+	\end{equation}
+	
+	Por lo tanto:
+	
+	\begin{equation}
+		i_h(t) = C_1 e^{-11000t}
+	\end{equation}
+	
+	Esta solución homogénea representa la respuesta natural del circuito RL, que describe cómo se disipa la energía almacenada en el inductor sin fuentes externas. En términos físicos, corresponde a la caída exponencial de la corriente debido a la resistencia, con una constante de tiempo $\tau = \frac{L}{R} = \SI{90,91}{\micro\second}$.
+	
+	\vspace{0.3cm}
+	
+	\textbf{3. Solución particular (respuesta forzada).} Depende de la forma particular de la fuente o excitación. En este circuito RL alimentado con corriente continua, cuando t>0, y el circuito entre en régimen estacionario, la bobina se comportará como un cortocircuito. Por tanto, conociendo esto, se puede deducir la solución forzada:
+	
+	\begin{center}
+		\resizebox{0.5\textwidth}{!}{
+			\begin{circuitikz}
+				% Fuente, interruptor CERRADO, resistencia y cortocircuito
+				\draw
+				(0,0) to[battery1, l_={$9\,\text{V}$}, invert] (0,3)
+				to[closing switch, l_={$t>0$}] (2,3)
+				to[R, l_={$220\,\Omega$}, i_={$i_p(t)$}] (5,3)
+				to[short] (5,0)
+				-- (0,0);
+			\end{circuitikz}
+		}
+	\end{center}
+	
+	
+	\begin{equation}
+		0 + \frac{R}{L}i_p = \frac{U}{L} \quad \Longrightarrow \quad i_p = \frac{U}{R}
+	\end{equation}
+	
+	\vspace{0.3cm}
+	Sustituyendo $U=\SI{9}{\volt}$ y $R=\SI{220}{\ohm}$:
+	
+	\begin{equation}
+		i_p = \frac{U}{R} = \frac{9}{220} = 0{,}0409\ \text{A} = \SI{40,9}{\milli\ampere}
+	\end{equation}
+	
+	\vspace{0.3cm}
+	Esta solución particular captura el comportamiento en estado estacionario, donde el inductor se comporta como un cortocircuito y la corriente alcanza un valor constante.
+	
+	\vspace{0.3cm}
+	
+	\textbf{6. Solución general (superposición).} La solución total es la suma de las dos:
+	
+	\begin{equation}
+		i(t) = i_h(t) + i_p = C_1 e^{-11000t} + 0{,}0409
+	\end{equation}
+	
+	Para conocer $C_1$, es necesario aplicar la \textbf{condición inicial de la inductancia}. Dado que $i(0)=0$ cuando $t<0$ y teniendo en cuenta que por la \textbf{propiedad de continuidad de la intensidad} $i(0) = i(0^-) = i(0^+) = 0\ \text{A}$:
+	
+	
+	\begin{equation}
+		0 = C_1 + 0{,}0409 \quad \Rightarrow \quad C_1 = -0{,}0409
+	\end{equation}
+	
+	Por lo que la solución completa queda:
+	
+	\begin{equation}
+		i(t) = 0{,}0409\left(1 - e^{-11000t}\right)\ \text{A}
+	\end{equation}
+	
+	Expresada en términos de la constante de tiempo $\tau = \SI{90,91}{\micro\second}$:
+	
+	\begin{equation}
+		i(t) = 40{,}9\left(1 - e^{-t/\tau}\right)\ \text{mA}
+	\end{equation}
+	
+% ========== PROBLEMA 1 - Apartado b) ==========
+\begin{center}
+    \begin{tcolorbox}[solucion, width=0.85\textwidth]
+        \centering
+        \textbf{Solución:} $i(t) = 0{,}0409\left(1 - e^{-11000t}\right)\ \text{A} = 40{,}9\left(1 - e^{-t/\tau}\right)\ \text{mA}$
+    \end{tcolorbox}
+\end{center}
+
+\newpage
+	\textbf{Comprobación de los resultados:}
+	\begin{itemize}
+		\item Valor en régimen permanente: $i(\infty)=\dfrac{U}{R}=\SI{40,9}{\milli\ampere}$.
+		\item Valor en $t=\tau$: \[
+		i(\tau)=\frac{U}{R}\left(1-e^{-1}\right)=0{,}0409\cdot(1- e^{-1})\approx \SI{25,85}{\milli\ampere}\ (\approx 63{,}2\%).
+		\]
+		\item Valor inicial: $i(0)=0$ (cumple la condición de inductor).
+	\end{itemize}
+	
+	\vspace{0.3cm}
+	
+	Finalmente, con esta expresión se puede trazar la curva $i(t)$ marcando los puntos característicos $i(0)$, $i(\tau)$ e $i(\infty)$ para representar la dinámica transitoria del circuito RL. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{GraficaProb1.png}
+	\caption{Respuesta transitoria de la corriente en el circuito RL.} 
+	\label{fig:respuesta_RL}
+\end{figure}
+
+
+	
+	Como se puede observar en la Figura~\ref{fig:respuesta_RL}, los valores obtenidos mediante simulación concuerdan con los calculados analíticamente. En particular, se verifica que la corriente inicialmente es nula, tras la conmutación alcanza un valor de 40,9 mA y, finalmente, también se puede corroborar que alcanza aproximadamente el \SI{63,2}{\percent} de su valor final en $t=\tau=\SI{90,91}{\micro\second}$.
+
+
+    \newpage
+\subsubsection{¿Cuánto tiempo tarda la corriente en alcanzar el 80\%?}
+
+Como ya es conocida la expresión que describe la evolución temporal de la corriente, simplemente es necesario calcular el $80\%$ de su valor en estado de equilibrio, e igualar la ecuación a esta amplitud, obteniendo así el periodo de tiempo necesario: 
+
+\vspace{0.3 cm}
+
+Para $i(t) = 0{,}80 \times 0{,}0409 = 0{,}03272\ \text{A}$:
+\begin{equation}
+	0{,}03272 = 0{,}0409(1 - e^{-11000t})
+\end{equation}
+
+\begin{equation}
+	e^{-11000t} = 1 - \frac{0{,}03272}{0{,}0409} = 0{,}20
+\end{equation}
+
+\begin{equation}
+	t = -\frac{\ln(0{,}20)}{11000} = \frac{1{,}609}{11000} = 1{,}463 \times 10^{-4}\ \text{s}
+\end{equation}
+
+% ========== PROBLEMA 1 - Apartado c) ==========
+\begin{center}
+    \begin{tcolorbox}[solucion, width=0.7\textwidth]
+        \centering
+        \textbf{Solución:} $t = \SI{146,3}{\micro\second} = 0{,}0001463\ \text{s}$
+    \end{tcolorbox}
+\end{center}
+
+\vspace{0.3cm}
+
+Este valor puede verificarse visualmente en la Figura~\ref{fig:GraficaProb1_80}, confirmando la validez del análisis teórico mediante la simulación.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{GraficaProb1_80.png}
+	\caption{Respuesta transitoria de la corriente en el circuito RL.} 
+	\label{fig:GraficaProb1_80}
+\end{figure}
+
+
+
+
+
+
+
+\clearpage
+
+\subsection{Problema 2}
+	
+	\begin{tcolorbox}[enunciado, title={Problema 2}]
+		Para un circuito RC en serie con $R = \SI{2200}{\ohm}$ y $C = \SI{10}{\micro\farad}$, inicialmente cargado a \SI{24}{\volt}.
+        
+        \medskip
+		
+		\textbf{a)} ¿Cuál es la corriente inicial cuando el condensador se conecta a través de la resistencia en t = 0?
+		
+		\medskip
+		
+		\textbf{b)} ¿Cuánto tiempo tardará el voltaje del condensador en caer a 5V?.
+	\end{tcolorbox}
+	
+	
+	
+	
+En primer lugar, analizando el problema, se hace una representación del mismo, con el fin de hacerlo más visual:
+	
+	
+	
+	\begin{center}
+		\begin{circuitikz}[scale=1.2]
+			\draw 
+			(0,0) to[C={$C=10\,\mu F$}, v={$U_C(0)=24\,V$}] (0,3)
+			to[switch, l_={$t=0$}] (3,3)
+			to[R={$R=2200\,\Omega$}, i_={$i(t)$}] (6,3)
+			-- (6,0)
+			-- (0,0);
+		\end{circuitikz}
+	\end{center}
+	
+
+
+\subsubsection{¿Cuál es la corriente inicial cuando el condensador se conecta a través de la resistencia en t = 0?}
+
+En un circuito RC en descarga, la corriente viene dada por:
+\[
+i(t) = i_0 \cdot e^{-\frac{t}{RC}}
+\]
+
+donde $i_0$ es la corriente inicial.
+
+Para encontrar la corriente inicial, aplicamos la ley de Kirchhoff en $t = 0$:
+\[
+C \cdot \frac{du}{dt} + \frac{1}{R} \cdot u = 0
+\]
+
+Resolviendo para $u_R$:
+\[
+C \cdot A + \frac{1}{R} = 0 \Rightarrow A = -\frac{1}{RC}
+\]
+
+Por tanto:
+\[
+u_R = C_1 \cdot e^{-\frac{t}{RC}} \Rightarrow u_R = C_1 \cdot e^{-\frac{1}{RC} \cdot t}
+\]
+
+Para $u_0 \to u_0 = 0$:
+
+Se verifica que:
+\[
+u(t) = C_1 \cdot e^{-\frac{1}{RC} \cdot t}
+\]
+
+Como $u(0) = 24$ V, entonces:
+\[
+u(0) = 24 = C_1 \cdot e^0 \Rightarrow C_1 = 24
+\]
+
+Por lo tanto:
+\[
+u(t) = 24 \cdot e^{-\frac{1}{RC} \cdot t}
+\]
+
+Y la corriente es:
+\[
+i(t) = \frac{u(t)}{R}
+\]
+
+La corriente inicial será:
+\[
+i(0) = \frac{u(0)}{R} = \frac{24}{2200} = \boxed{\SI{10.909e-3}{\ampere} \approx \SI{10.9}{\milli\ampere}}
+\]
+
+Una vez realizados los cálculos, se simula el circuito en Simulink y se grafica la corriente frente al tiempo con el fin de observar el comportamiento del sistema: 
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{corriente_condensador_prob2.png}
+    \caption{Evolución temporal de la corriente del condensador}
+\end{figure}
+
+Tras realizar la simulación y etiquetar el punto en el que t=0 aproximadamente, se puede confirmar que el resultado calculado manualmente coincide con la simulación realizada. 
+
+\begin{center}
+    \begin{tcolorbox}[solucion, width=0.7\textwidth]
+        \centering
+        \textbf{Solución:} $i(0) = \SI{10,909}{\milli\ampere} \approx \SI{10,9}{\milli\ampere}$
+    \end{tcolorbox}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+
+\subsubsection{¿Cuánto tiempo tardará el voltaje del condensador en caer a 5V?}
+
+Sabemos que $u_0 = 24$ V y $u(t) = 5$ V y que la ecuación que modela la evolución del voltaje en el circuito es:
+
+\[
+u(t) = 24 \cdot e^{-\frac{1}{RC} \cdot t}
+\]
+
+Por tanto, hallamos $u(t) = 5$ V:
+
+\[
+u(t) = 5 = 24 \cdot e^{-\frac{1}{2200 \cdot 10 \cdot 10^{-6}} \cdot t} \Rightarrow
+\]
+\[
+\Rightarrow e^{-\frac{500}{11} \cdot t} = \frac{5}{24} \Rightarrow
+\]
+\[
+\Rightarrow \ln\left|e^{-\frac{500}{11} \cdot t}\right| = -\frac{500}{11} \cdot t = \ln\left|\frac{5}{24}\right| \Rightarrow
+\]
+\[
+\Rightarrow t = -\frac{\ln\left|\frac{5}{24}\right|}{\frac{500}{11}} = \boxed{\SI{0.0348}{\second}=34.8 ms}
+\]
+
+
+Tras llevar a cabo todos los cálculos necesarios, se realizará una simulación haciendo uso de Simulink, con el fin de observar la evolución temporal del voltaje y el valor del tiempo en el momento en el que el voltaje es 5V.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{voltaje_condensador_prob2.png}
+    \caption{Evolución temporal del voltaje del condensador}
+\end{figure}
+
+Se señalan en la gráfica dos puntos muy cercanos a 5V, los cuales muestran dos valores que crean un intervalo entre los cuales se encuentra el valor calculado manualmente. 
+
+
+
+
+
+
+
+% ========== PROBLEMA 2 - Apartado b) ==========
+\begin{center}
+    \begin{tcolorbox}[solucion, width=0.7\textwidth]
+        \centering
+        \textbf{Solución:} $t = \SI{34,8}{\milli\second} = 0{,}0348\ \text{s}$
+    \end{tcolorbox}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\subsection{Problema 3}
+\begin{tcolorbox}[enunciado, title={Problema 3}]
+    Explique por qué la tensión de un condensador y la corriente de una bobina no pueden cambiar instantáneamente. Proporcione una interpretación física para cada caso, relacionándolo
+con la energía almacenada.
+\end{tcolorbox}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsubsection*{Tensión en el condensador}
+
+\textbf{Análisis matemático:}
+
+La relación fundamental entre corriente y tensión en un condensador viene dada por:
+\begin{equation}
+	i_C(t) = C\frac{dv_C(t)}{dt}
+\end{equation}
+
+donde $C$ es la capacitancia, $i_C(t)$ es la corriente que atraviesa el condensador y $v_C(t)$ es la tensión entre sus terminales.
+
+Si intentáramos que $v_C(t)$ cambiara instantáneamente (es decir, con $dt \to 0$), la derivada $\frac{dv_C}{dt} \to \infty$, lo que implicaría que $i_C \to \infty$ (corriente infinita). Esto es físicamente imposible, ya que no existe fuente capaz de suministrar corriente infinita, y además los conductores no podrían soportarla.
+
+\vspace{0.3cm}
+
+\textbf{Interpretación física:}
+
+Un condensador almacena carga eléctrica en sus placas, creando un campo eléctrico entre ellas. Para cambiar la tensión, es necesario modificar la cantidad de carga almacenada, lo cual requiere tiempo para que la corriente transporte las cargas. Es análogo a llenar o vaciar un depósito de agua: no puede hacerse instantáneamente, sino que requiere un flujo continuo durante un intervalo de tiempo.
+
+\vspace{0.3cm}
+
+\textbf{Interpretación energética:}
+
+La energía almacenada en el campo eléctrico del condensador es:
+\begin{equation}
+	W_C = \frac{1}{2}Cv_C^2
+\end{equation}
+
+Si la tensión cambiara instantáneamente de $v_1$ a $v_2$, la variación de energía sería:
+\begin{equation}
+	\Delta W_C = \frac{1}{2}C(v_2^2 - v_1^2)
+\end{equation}
+
+La potencia necesaria para este cambio sería:
+\begin{equation}
+	P = \frac{dW_C}{dt} = \frac{\Delta W_C}{\Delta t} \to \infty \quad \text{cuando } \Delta t \to 0
+\end{equation}
+
+Esto requeriría una potencia infinita, lo cual viola el principio de conservación de la energía y las limitaciones físicas de cualquier sistema real.
+
+\vspace{0.5cm}
+
+\subsubsection*{Corriente en la bobina}
+
+\textbf{Análisis matemático:}
+
+La relación fundamental entre tensión y corriente en una bobina (inductor) viene dada por:
+\begin{equation}
+	v_L(t) = L\frac{di_L(t)}{dt}
+\end{equation}
+
+donde $L$ es la inductancia, $v_L(t)$ es la tensión en los terminales de la bobina e $i_L(t)$ es la corriente que la atraviesa.
+
+Si $i_L(t)$ cambiara instantáneamente ($dt \to 0$), entonces $\frac{di_L}{dt} \to \infty$, lo que resultaría en $v_L \to \infty$ (tensión infinita). Una tensión infinita provocaría la ruptura dieléctrica del aislamiento y arcos eléctricos, lo cual es físicamente inadmisible.
+
+\vspace{0.3cm}
+
+\textbf{Interpretación física:}
+
+Una bobina almacena energía en forma de campo magnético generado por la corriente que circula a través de ella. Según la ley de Faraday, cualquier cambio en el flujo magnético induce una fuerza electromotriz (tensión) que se opone al cambio (ley de Lenz). Un cambio instantáneo de corriente implicaría un cambio instantáneo del campo magnético, lo cual induciría una tensión infinita que se opondría a dicho cambio. Es como intentar detener instantáneamente un volante de inercia en rotación: la inercia magnética de la bobina se resiste al cambio brusco.
+
+\vspace{0.3cm}
+
+\textbf{Interpretación energética:}
+
+La energía almacenada en el campo magnético de la bobina es:
+\begin{equation}
+	W_L = \frac{1}{2}Li_L^2
+\end{equation}
+
+Si la corriente cambiara instantáneamente de $i_1$ a $i_2$, la variación de energía sería:
+\begin{equation}
+	\Delta W_L = \frac{1}{2}L(i_2^2 - i_1^2)
+\end{equation}
+
+La potencia requerida para este cambio sería:
+\begin{equation}
+	P = \frac{dW_L}{dt} = \frac{\Delta W_L}{\Delta t} \to \infty \quad \text{cuando } \Delta t \to 0
+\end{equation}
+
+Al igual que en el condensador, esto requeriría potencia infinita, lo cual es imposible desde el punto de vista físico y energético.
+
+\vspace{0.5cm}
+
+
+\newpage
+\subsubsection*{Representación gráfica}
+
+A continuación se muestran gráficas que ilustran el comportamiento de las variables de estado ante una conmutación en $t=0$:
+
+\begin{figure}[H]
+    \centering
+    % --- Gráfica del condensador ---
+    \begin{minipage}[t]{0.47\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=1.0]
+            \begin{axis}[
+                width=\textwidth,
+                height=6cm, % ← aumentada la altura
+                xlabel={$t$},
+                ylabel={$v_C(t)$},
+                title={\textbf{Tensión en el condensador (continua)}},
+                axis lines=middle,
+                xmin=-1, xmax=5,
+                ymin=-0.5, ymax=2.5,
+                xtick={0},
+                ytick={0,1,2},
+                grid=major,
+                samples=100,
+                domain=-1:5,
+                legend pos=south east,
+            ]
+                % Curva exponencial continua
+                \addplot[azulalmeria, very thick, smooth] coordinates {
+                    (-1,0) (0,0)
+                };
+                \addplot[azulalmeria, very thick, smooth, domain=0:5] {2*(1-exp(-x))};
+                \addlegendentry{$v_C(t)$ real}
+
+                % Curva imposible (discontinua)
+                \addplot[red, thick, dashed] coordinates {
+                    (-1,0) (-0.01,0) (-0.01,2) (5,2)
+                };
+                \addlegendentry{Cambio imposible}
+
+                \node[circle, fill=azulalmeria, inner sep=1.5pt] at (axis cs:0,0) {};
+            \end{axis}
+        \end{tikzpicture}
+    \end{minipage}%
+    \hfill
+    % --- Gráfica de la bobina ---
+    \begin{minipage}[t]{0.47\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=1.0]
+            \begin{axis}[
+                width=\textwidth,
+                height=6cm, 
+                xlabel={$t$},
+                ylabel={$i_L(t)$},
+                title={\textbf{Corriente en la bobina (continua)}},
+                axis lines=middle,
+                xmin=-1, xmax=5,
+                ymin=-0.5, ymax=2.5,
+                xtick={0},
+                ytick={0,1,2},
+                grid=major,
+                samples=100,
+                domain=-1:5,
+                legend pos=south east,
+            ]
+                % Curva exponencial continua
+                \addplot[azulalmeria, very thick, smooth] coordinates {
+                    (-1,2) (0,2)
+                };
+                \addplot[azulalmeria, very thick, smooth, domain=0:5] {2*exp(-x)};
+                \addlegendentry{$i_L(t)$ real}
+
+                % Curva imposible (discontinua)
+                \addplot[red, thick, dashed] coordinates {
+                    (-1,2) (-0.01,2) (-0.01,0) (5,0)
+                };
+                \addlegendentry{Cambio imposible}
+
+                \node[circle, fill=azulalmeria, inner sep=1.5pt] at (axis cs:0,2) {};
+            \end{axis}
+        \end{tikzpicture}
+    \end{minipage}
+
+    \caption{Comparación entre el comportamiento real (continuo) de las variables de estado y el comportamiento imposible (discontinuo). En ambos casos, la línea sólida azul representa la evolución física real, mientras que la línea punteada roja muestra el cambio instantáneo que violaría las leyes de la física.}
+\end{figure}
+
+
+
+\textbf{Observaciones importantes:}
+\begin{itemize}
+	\item En $t=0$ ocurre una conmutación, pero las variables de estado mantienen su continuidad
+	\item La tensión del condensador no puede saltar de 0 a 2V instantáneamente (línea roja imposible)
+	\item La corriente de la bobina no puede caer de 2A a 0A instantáneamente (línea roja imposible)
+	\item Las curvas reales (azul) muestran transiciones suaves exponenciales que respetan la física del sistema
+\end{itemize}
+
+\vspace{0.5cm}
+
+% ========== PROBLEMA 3 ==========
+\begin{center}
+    \begin{tcolorbox}[solucion, width=0.95\textwidth]
+
+        \textbf{Conclusión:} Las llamadas variables de estado (tensión en condensadores y corriente en bobinas) deben cambiar de forma continua porque representan energía almacenada en campos eléctricos y magnéticos, respectivamente. La energía no puede cambiar instantáneamente sin requerir potencia infinita, lo cual es físicamente imposible. Este principio es consecuencia directa de la conservación de la energía y determina el comportamiento dinámico de los circuitos con elementos reactivos.
+    \end{tcolorbox}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+\section{Problemas Prácticos}
+
+\subsection{1: Simulación}
+
+\begin{tcolorbox}[enunciado, title={1: Simulación}]
+Utilice \textbf{MATLAB/Simulink} o \textbf{Python} para simular la respuesta escalón de un circuito RLC en serie. Grafique la tensión en el condensador y la corriente en la bobina. 
+
+Parámetros: $R = 100~\Omega$, \quad $L = 5~\text{mH}$, \quad $C = 1~\mu\text{F}$, tensión de entrada: escalón de $12~\text{V}$.
+
+\end{tcolorbox}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\textbf{Análisis del Circuito:}
+
+Para un circuito RLC serie sometido a una entrada escalón de tensión, la ecuación diferencial que describe el sistema es:
+
+\begin{equation}
+    LC\frac{d^2u_C}{dt^2} + RC\frac{du_C}{dt} + u_C = u_{in}
+\end{equation}
+
+donde $u_C$ es la tensión en el condensador y $u_{in}$ es la tensión de entrada.
+
+Los parámetros característicos del circuito son:
+
+\begin{itemize}
+    \item Frecuencia natural: 
+    \begin{equation}
+        \omega_0 = \frac{1}{\sqrt{LC}} = \frac{1}{\sqrt{5 \times 10^{-3} \times 1 \times 10^{-6}}} = 14142.14~\text{rad/s}
+    \end{equation}
+    
+    \item Factor de amortiguamiento: 
+    \begin{equation}
+        \zeta = \frac{R}{2}\sqrt{\frac{C}{L}} = \frac{100}{2}\sqrt{\frac{1 \times 10^{-6}}{5 \times 10^{-3}}} \approx 0.707
+    \end{equation}
+\end{itemize}
+
+Dado que $\zeta \approx 0.707$, el sistema está críticamente amortiguado o ligeramente subamortiguado, lo que resulta en una respuesta con mínimo sobrepaso.
+
+
+La simulación se realizó para obtener la respuesta temporal del circuito ante la entrada escalón de 12 V.
+
+
+
+
+
+\newpage
+\textbf{Corriente en la Bobina:}
+
+La Figura \ref{fig:corriente_bobina} muestra la evolución temporal de la corriente en la bobina durante los primeros 2 ms después de aplicar el escalón de tensión.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{corriente_bobina.png}
+    \caption{Evolución temporal de la corriente en la bobina}
+    \label{fig:corriente_bobina}
+\end{figure}
+
+En la gráfica se pueden identificar tres regiones claramente diferenciadas:
+
+\begin{enumerate}
+    \item \textbf{Región de subida rápida (0 -- 0.08 ms):} La corriente aumenta bruscamente desde cero hasta alcanzar su valor máximo de aproximadamente 0.077 A. Este comportamiento se debe a que, en el instante inicial, el condensador actúa como un cortocircuito (está descargado) y la bobina opone resistencia al cambio de corriente según la ley de Faraday: $u_L = L\frac{di}{dt}$.
+
+    \item \textbf{Región transitoria oscilatoria (0.08 -- 0.5 ms):} Después del pico máximo, la corriente disminuye de forma oscilatoria amortiguada. Se observa que la corriente pasa brevemente por valores ligeramente negativos alrededor de $t = 0.3$ ms, alcanzando aproximadamente $-0.003$ A. Este comportamiento oscilatorio es característico de los sistemas subamortiguados y se debe a la transferencia de energía entre el campo magnético de la bobina y el campo eléctrico del condensador.
+
+    \item \textbf{Región de estado estacionario ($t > 0.5$ ms):} La corriente converge asintóticamente a cero. Este comportamiento es el esperado para un circuito RLC serie en corriente continua, ya que en estado estacionario el condensador se comporta como un circuito abierto, impidiendo el paso de corriente continua.
+\end{enumerate}
+
+La rapidez del transitorio (tiempo de establecimiento de aproximadamente 0.5 ms) está determinada por el factor de amortiguamiento $\zeta$ y la frecuencia natural $\omega_0$ del sistema.
+\newpage
+\textbf{Tensión en el Condensador:}
+
+La Figura \ref{fig:voltaje_condensador} presenta la evolución temporal del voltaje en el condensador durante el mismo intervalo de tiempo.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{voltaje_condensador.png}
+    \caption{Evolución temporal del voltaje del condensador}
+    \label{fig:voltaje_condensador}
+\end{figure}
+
+El comportamiento del voltaje del condensador puede analizarse en las siguientes fases:
+
+\begin{enumerate}
+    \item \textbf{Fase de carga inicial (0 -- 0.2 ms):} El voltaje aumenta rápidamente desde 0 V, siguiendo una curva exponencial típica de la carga de un condensador. La pendiente inicial está limitada por la resistencia y la bobina del circuito. Durante esta fase, la mayor parte de la energía suministrada por la fuente se almacena en los campos eléctrico y magnético del condensador y la bobina.
+
+    \item \textbf{Sobrepaso (máximo en $t \approx 0.3$ ms):} El voltaje alcanza un valor máximo de aproximadamente 12.5 V, superando ligeramente el valor final de 12 V. Este sobrepaso del 4\% ($\frac{12.5 - 12}{12} \times 100\% \approx 4\%$) es característico de un sistema con $\zeta \approx 0.707$ y confirma el comportamiento ligeramente subamortiguado del circuito. El sobrepaso ocurre porque la energía almacenada en la bobina durante la fase inicial continúa cargando el condensador más allá del valor de la fuente.
+
+    \item \textbf{Oscilación amortiguada (0.3 -- 0.6 ms):} Después del sobrepaso, se observa una ligera oscilación alrededor del valor final. El voltaje desciende ligeramente por debajo de 12 V antes de estabilizarse. Esta oscilación es complementaria a la observada en la corriente y representa el intercambio de energía entre los elementos reactivos del circuito.
+
+    \item \textbf{Estado estacionario ($t > 0.6$ ms):} El voltaje se estabiliza en 12 V, que es exactamente el valor de la tensión de entrada aplicada. En esta condición, el condensador está completamente cargado, la corriente es nula, y toda la energía del sistema está almacenada en el campo eléctrico del condensador: $E = \frac{1}{2}Cu^2 = \frac{1}{2}(1 \times 10^{-6})(12)^2 = 72~\mu\text{J}$.
+\end{enumerate}
+
+\paragraph{Interpretación Física del Comportamiento}
+
+La relación entre las dos gráficas revela la dinámica energética del circuito:
+
+\begin{itemize}
+    \item El pico máximo de corriente (0.077 A) ocurre aproximadamente en $t = 0.08$ ms, cuando el voltaje del condensador es de aproximadamente 8 V (antes de alcanzar el valor final). En este instante, la tasa de cambio del voltaje del condensador es máxima.
+
+    \item La corriente se anula cuando el voltaje del condensador alcanza su máximo (12.5 V en $t \approx 0.3$ ms), lo cual es consistente con la relación $i = C\frac{du_C}{dt}$: cuando la derivada del voltaje es cero (en el máximo), la corriente también es cero.
+
+    \item El amortiguamiento, causado por la disipación de energía en la resistencia a razón de $P = Ri^2$, hace que las oscilaciones disminuyan exponencialmente hasta que el sistema alcanza el equilibrio.
+\end{itemize}
+
+
+
+\begin{center}
+    \begin{tcolorbox}[solucion, width=0.95\textwidth]
+
+        \textbf{Conclusión:} El circuito RLC serie exhibe un comportamiento transitorio característico de un sistema de segundo orden con factor de amortiguamiento $\zeta \approx 0.707$. La corriente presenta un pico inicial seguido de una disminución exponencial hasta llegar a cero en estado estacionario, mientras que el voltaje en el condensador alcanza el valor de la tensión de entrada con un ligero sobrepaso del 4\%, confirmando el carácter subamortiguado del circuito. El tiempo de establecimiento de aproximadamente 0.5--0.6 ms indica una respuesta relativamente rápida del circuito ante el escalón de entrada.
+    \end{tcolorbox}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+\section{Problema Avanzado}
+
+	\subsection{Problema 3: Circuito RLC Avanzado}
+	
+\begin{tcolorbox}[enunciado, title={Problema 3 -- Problema Avanzado}]
+	Un circuito RLC en serie tiene $R = \SI{100}{\ohm}$, $L = \SI{250}{\milli\henry}$ y $C = \SI{10}{\micro\farad}$. Se conecta a una fuente DC de \SI{5}{\volt} en $t = 0$.
+	
+	\medskip
+	
+	\textbf{a)} Determine si el circuito está sobreamortiguado, críticamente amortiguado o subamortiguado. Justifique su respuesta calculando $\alpha$ y $\omega_0$.
+	
+	\medskip
+	
+	\textbf{b)} Dibuje la forma de onda esperada para la corriente $i(t)$, explicando las características clave de su dibujo (p.~ej., oscilaciones, tiempo de estabilización aproximado).
+\end{tcolorbox}
+	
+	\begin{center}
+		\resizebox{0.5\textwidth}{!}{
+			\begin{circuitikz}
+				\draw
+				(0,0) to[battery1, invert, l_={$5\,\text{V}$}] (0,3)
+				to[closing switch, l_={$t=0$}] (2,3)
+				to[R, l_={$100\,\Omega$}, i_={$i(t)$}] (4,3)
+				to[L, l_={$250\,\text{mH}$}] (6,3)
+				to[C, l_={$10\,\mu\text{F}$}] (6,0)
+				-- (0,0);
+			\end{circuitikz}
+		}
+	\end{center}
+	
+	\subsubsection{ Determine si el circuito está sobreamortiguado, críticamente amortiguado o subamortiguado. Justifique su respuesta calculando \texorpdfstring{$\alpha$}{alfa} y \texorpdfstring{$\omega_0$}{omega0}}
+	
+	Aplicando la 2ª Ley de Kirchhoff, se obtiene la siguiente ecuación diferencial:
+	
+	\begin{equation}
+		U_G(t) = U_R(t) + U_L(t) + U_C(t)
+	\end{equation}
+	
+	donde:
+	
+	\begin{align}
+		U_R(t) &= R \cdot i(t) \quad \text{(Resistencia)} \\
+		U_L(t) &= L\frac{di(t)}{dt} \quad \text{(Bobina)} \\
+		U_C(t) &= \frac{1}{C}\int i(t)dt \quad \text{(Condensador)}
+	\end{align}
+	
+	\begin{equation}
+		U_G(t) = R \cdot i(t) + L\frac{di(t)}{dt} + \frac{1}{C}\int i(t)dt \quad (1)
+	\end{equation}
+	
+	\vspace{0.1cm}
+	
+	Para no trabajar con la integral y simplificar los cálculos sustituimos $i(t)$ como $\to i(t) = C\frac{du_C(t)}{dt}$
+	
+	\begin{equation}
+		U_G(t) = RC\frac{du_C(t)}{dt} + LC\frac{d^2u_C(t)}{dt^2} + u_C(t)
+	\end{equation}
+	
+	\vspace{0.1cm}
+	
+	Finalmente, normalizamos dividiendo todo por $LC$, obteniendo así la expresión diferencial a resolver:
+	
+	\begin{equation}
+		\frac{U_G(t)}{LC} = \frac{R}{L}\frac{du_C(t)}{dt} + \frac{d^2u_C(t)}{dt^2} + \frac{u_C(t)}{LC}
+	\end{equation}
+	
+	\vspace{0.3cm}
+	
+	Una vez definida la ecuación que describe la dinámica del sistema, resolvemos la expresión, igual que en los apartados anteriores, mediante la solución libre u homogénea y la solución forzada.
+	
+	\vspace{0.2cm}
+	
+	\textbf{ Solución libre (homogénea):}
+	
+	Para determinar la respuesta natural del circuito, se anulan las fuentes externas y se resuelve la ecuación homogénea:
+	
+	\begin{equation}
+		\frac{d^2u_C(t)}{dt^2} + \frac{R}{L}\frac{du_C(t)}{dt} + \frac{u_C(t)}{LC} = 0
+	\end{equation}
+	
+	\vspace{0.1cm}
+	
+	Se resuelve la ecuación mediante la ecuación característica sustituyendo $u_C = Ae^{st}$:
+	
+	\begin{equation}
+		s^2Ae^{st} + \frac{R}{L}sAe^{st} + \frac{Ae^{st}}{LC} = 0 \to s^2 + \frac{R}{L}s + \frac{1}{LC} = 0
+	\end{equation}
+	
+	Esta es la \textbf{ecuación característica} del sistema, cuyas raíces determinarán el comportamiento dinámico del circuito.
+	
+	\vspace{0.3cm}
+	
+	Se obtienen las raíces del sistema aplicando la fórmula general:
+	
+	\begin{equation}
+		s = \frac{-\frac{R}{L} \pm \sqrt{\left(\frac{R}{L}\right)^2 - 4\frac{1}{LC}}}{2} = \frac{-\frac{R}{L} \pm \sqrt{\frac{R^2}{L^2} - \frac{4}{LC}}}{2}
+	\end{equation}
+	
+Operando algebraicamente:
+
+\begin{equation}
+	s = \frac{-\frac{R}{L} \pm \frac{1}{L}\sqrt{R^2 - \frac{4L}{C}}}{2} = \frac{-R \pm \sqrt{R^2C^2 - 4LC}}{2LC}
+\end{equation}
+
+Reescribiendo la expresión anterior de forma más compacta:
+
+\begin{equation}
+	s_{1,2} = -\frac{R}{2L} \pm \sqrt{\left(\frac{R}{2L}\right)^2 - \frac{1}{LC}}
+\end{equation}
+
+De esta expresión se pueden identificar directamente los parámetros característicos del sistema:
+\begin{align}
+	\alpha &= \frac{R}{2L} \quad \text{(Factor de amortiguamiento)} \\
+	\omega_0 &= \frac{1}{\sqrt{LC}} \quad \text{(Frecuencia natural no amortiguada)}
+\end{align}
+
+
+Por tanto, las dos raíces de la ecuación característica son:
+
+\begin{align}
+	s_1 &= \frac{-RC + \sqrt{R^2C^2 - 4LC}}{2LC} = -\alpha + \sqrt{\alpha^2 - \omega_0^2} \\
+	s_2 &= \frac{-RC - \sqrt{R^2C^2 - 4LC}}{2LC} = -\alpha - \sqrt{\alpha^2 - \omega_0^2}
+\end{align}
+	
+	\vspace{0.3cm}
+	
+	Y la solución libre tendrá la siguiente forma:
+	
+	\begin{equation}
+		u_C(t) = A_1e^{s_1t} + A_2e^{s_2t}
+	\end{equation}
+	
+	\vspace{0.3cm}
+	
+	Para analizar el tipo de respuesta del sistema, se definen los \textbf{parámetros característicos}, el factor de amortiguamiento y la frecuencia natural no amortiguada, anteriormente mencionados.
+	
+	El \textbf{factor de amortiguamiento} $\alpha$ cuantifica la rapidez con la que decae la energía del sistema debido a las pérdidas resistivas. La \textbf{frecuencia natural} $\omega_0$ representa la frecuencia de oscilación del circuito LC sin resistencia.
+	
+	\vspace{0.3cm}
+	
+	Con estas definiciones, las raíces pueden expresarse como:
+	
+	\begin{equation}
+		s_{1,2} = -\alpha \pm \sqrt{\alpha^2 - \omega_0^2}
+	\end{equation}
+	
+	
+	\begin{itemize}
+		\item \textbf{Si $\alpha > \omega_0$ $\to$ 2 soluciones reales y distintas $\to$ Sobreamortiguado}
+		
+		El sistema alcanza el equilibrio sin oscilar, pero de forma lenta. La resistencia es suficientemente alta como para disipar rápidamente la energía.
+		
+		\item \textbf{Si $\alpha = \omega_0$$\to$ 1 solución doble $\to$ Amortiguado crítico}
+		
+		Representa el caso óptimo para alcanzar el equilibrio en el menor tiempo sin oscilaciones.
+		
+		\item \textbf{Si $\alpha < \omega_0$ $\to$ 2 soluciones complejas conjugadas $\to$ Subamortiguado}
+		
+		El sistema presenta oscilaciones amortiguadas. La energía oscila entre el inductor y el condensador con pérdidas graduales en la resistencia.
+	\end{itemize}
+	
+	\vspace{0.3cm}
+	
+	
+	Sustituyendo los valores $R = \SI{100}{\ohm}$, $L = \SI{250}{\milli\henry}$ y $C = \SI{10}{\micro\farad}$, resulta:
+	
+	\begin{align}
+		\alpha &= \frac{R}{2L} = \frac{100}{2 \times 250 \times 10^{-3}} = \frac{100}{0{,}5} = \SI{200}{\radian\per\second} \\
+		\omega_0 &= \frac{1}{\sqrt{LC}} = \frac{1}{\sqrt{250 \times 10^{-3} \times 10 \times 10^{-6}}} = \frac{1}{\sqrt{2{,}5 \times 10^{-6}}} = \SI{632,46}{\radian\per\second}
+	\end{align}
+	
+	Comparando ambos valores:
+	
+	\begin{equation}
+		\alpha = \SI{200}{\radian\per\second} < \omega_0 = \SI{632,46}{\radian\per\second}
+	\end{equation}
+	
+% ========== PROBLEMA AVANZADO - Apartado a) ==========
+\begin{center}
+    \begin{tcolorbox}[solucion, width=0.75\textwidth]
+        \centering
+        \textbf{Solución:} Como $\alpha = \SI{200}{\radian\per\second} < \omega_0 = \SI{632,46}{\radian\per\second}$ \\
+        $\Rightarrow$ \textbf{Sistema Subamortiguado}
+    \end{tcolorbox}
+\end{center}
+	
+	\vspace{0.3cm}
+	
+    También, conociendo el factor de amortiguamiento y la frecuencia natural no amortiguada, se puede calcular la frecuencia amortiguada;
+	
+	\begin{equation}
+		\omega_d = \sqrt{\omega_0^2 - \alpha^2} = \sqrt{(632{,}46)^2 - (200)^2} = \sqrt{400{,}005{,}16 - 40{,}000} = \SI{600}{\radian\per\second}
+	\end{equation}
+	
+	Esta frecuencia $\omega_d$ es la frecuencia real de oscilación del sistema, siempre menor que $\omega_0$ debido al efecto del amortiguamiento.
+	
+	\subsubsection{ Dibuje la forma de onda esperada para la corriente \texorpdfstring{$i(t)$}{i(t)}, explicando las características clave de su dibujo}
+	
+	Para este sistema subamortiguado, las raíces complejas conjugadas son:
+	
+	\begin{align}
+		s_1 &= -200 + 600j \\
+		s_2 &= -200 - 600j
+	\end{align}
+	
+	Sustituyendo en la solución homogénea:
+	
+	\begin{equation}
+		u_C(t) = A_1e^{(-200+600j)t} + A_2e^{(-200-600j)t}
+	\end{equation}
+	
+	Aplicando la identidad de Euler y agrupando términos, la solución puede expresarse en forma trigonométrica:
+	
+	\begin{equation}
+		u_C(t) = e^{-200t}\left[A_1\cos(600t) + A_2\sin(600t)\right]
+	\end{equation}
+	
+	\vspace{0.3cm}
+	
+	\textbf{ Solución forzada:}
+    
+	\vspace{0.3cm}
+    
+	En régimen permanente, el condensador se comporta como un circuito abierto y toda la tensión de la fuente cae sobre él:
+
+        \begin{equation}
+	u_C(t) = 5\ \text{V}  \text{(Fuente DC)}
+	\end{equation}
+    
+	\vspace{0.3cm}
+	
+	\textbf{Solución completa:}
+	
+	La solución total es la suma de la respuesta natural y la respuesta forzada:
+	\vspace{0.1cm}
+	\begin{equation}
+		u_C(t) = 5 + e^{-200t}\left[A_1\cos(600t) + A_2\sin(600t)\right]
+	\end{equation}
+	
+	\vspace{0.3cm}
+
+
+	\textbf{Condiciones iniciales:}
+	
+	Para determinar las constantes $A_1$ y $A_2$, se aplican las condiciones iniciales del circuito.
+	
+	\vspace{0.3cm}
+	
+	\textbf{1) Tensión inicial en el condensador:} $u_C(0) = 0$ (el condensador está descargado inicialmente)
+	
+	\begin{equation}
+		0 = 5 + A_1 \to A_1 = -5
+	\end{equation}
+	
+	\vspace{0.3cm}
+	
+	\textbf{2) Corriente inicial:} Utilizando la relación $i(t) = C\frac{du_C(t)}{dt}$, derivamos la tensión:
+	
+	\begin{align}
+		\frac{du_C(t)}{dt} &= -200e^{-200t}\left[A_1\cos(600t) + A_2\sin(600t)\right] \nonumber \\
+		&\quad + e^{-200t}\left[-600A_1\sin(600t) + 600A_2\cos(600t)\right]
+	\end{align}
+	
+	La corriente inicial en la bobina es nula por continuidad: $i(0)=i(0^-)=i(0^+) = 0$
+
+    \vspace{0.3cm}
+    
+	Evaluando en $t = 0$:
+	
+	\begin{equation}
+		0 = C\left[-200A_1 + 600A_2\right]
+	\end{equation}
+	
+	\begin{equation}
+		-200A_1 + 600A_2 = 0
+	\end{equation}
+	
+	Sustituyendo $A_1 = -5$:
+	\begin{equation}
+		-200(-5) + 600A_2 = 0 \to 1000 + 600A_2 = 0 \to A_2 = -\frac{5}{3}
+	\end{equation}
+	
+	\vspace{0.3cm}
+	
+	Por tanto, la tensión en el condensador es:
+	
+	\begin{equation}
+		u_C(t) = 5 + e^{-200t}\left[-5\cos(600t) - \frac{5}{3}\sin(600t)\right]
+	\end{equation}
+	
+	\vspace{0.3cm}
+	
+	Para obtener la corriente, derivamos y multiplicamos por $C$:
+	
+	\begin{align}
+		i(t) &= C\frac{du_C(t)}{dt} = C\left[-200e^{-200t}\left(-5\cos(600t) - \frac{5}{3}\sin(600t)\right)\right. \nonumber \\
+		&\quad \left. + e^{-200t}\left(-600(-5)\sin(600t) - \frac{5}{3} \times 600\cos(600t)\right)\right]
+	\end{align}
+	
+	Agrupando términos:
+	
+	\begin{align}
+		i(t) &= Ce^{-200t}\left[1000\cos(600t) + \frac{1000}{3}\sin(600t) + 3000\sin(600t) - 1000\cos(600t)\right] \\
+		&= Ce^{-200t}\left[\frac{1000}{3}\sin(600t) + 3000\sin(600t)\right]
+	\end{align}
+	
+	\begin{equation}
+		i(t) = Ce^{-200t}\left[\frac{10000}{3}\sin(600t)\right]
+	\end{equation}
+	
+	Sustituyendo $C = \SI{10}{\micro\farad} = 10 \times 10^{-6}\ \text{F}$:
+	
+	\begin{equation}
+		i(t) = \frac{1}{30}e^{-200t}\sin(600t)\ \text{A}
+	\end{equation}
+	
+% ========== PROBLEMA AVANZADO - Apartado b) ==========
+\begin{center}
+    \begin{tcolorbox}[solucion, width=0.85\textwidth]
+        \centering
+        \textbf{Solución:} $i(t) = \dfrac{1}{30}e^{-200t}\sin(600t)\ \text{A} = 33{,}33 \cdot e^{-200t}\sin(600t)\ \text{mA}$
+    \end{tcolorbox}
+\end{center}
+	
+	\vspace{0.3cm}
+	
+\textbf{Características clave de la forma de onda:}
+
+A partir de la expresión de la corriente obtenida, $i(t) = \frac{1}{30}e^{-200t}\sin(600t)$ A, y de los parámetros calculados del sistema ($\alpha = \SI{200}{\radian\per\second}$, $\omega_0 = \SI{632,46}{\radian\per\second}$, $\omega_d = \SI{600}{\radian\per\second}$), se identifican las siguientes características del régimen transitorio subamortiguado:
+
+\vspace{0.3cm}
+
+\textbf{1. Condiciones iniciales y finales:}
+
+\begin{itemize}
+    \item \textbf{Valor inicial:} $i(0) \approx 0$ A (medido: $i(0) \approx 0$)
+    
+    Este valor confirma la propiedad de continuidad de la corriente en la bobina, que no permite cambios instantáneos.
+    
+    \item \textbf{Valor final:} $i(\infty) \approx 0$ A (medido: $i(0) \approx 0$)
+    
+    En régimen permanente, el condensador actúa como circuito abierto, impidiendo la circulación de corriente.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{2. Sobreoscilación:}
+
+La sobreoscilación cuantifica el porcentaje con el que el primer pico máximo supera el valor final de la respuesta.
+Como se puede observar en la figura ~\ref{fig:corriente_RLC_avan}, el pico máximo alcanzado por la corriente tiene un valor de 20,85 mA, esto significa que el sistema presenta una sobreoscilación del 20,85\% teniendo en cuenta que se alcanza el estacionario en 0 mA.
+
+
+\vspace{0.3cm}
+\textbf{3. Tiempo de pico ($t_p$):}
+
+El tiempo de pico representa el instante en el que la respuesta alcanza su \textbf{primer valor máximo}, es decir, el punto de máxima sobreoscilación antes de comenzar a decaer hacia el valor de régimen estacionario:
+
+\vspace{0.3cm}
+
+El valor medido en la figura~\ref{fig:corriente_RLC_avan} tras la simulación del circuito es de  
+ $t_p = \SI{2,08}{\milli\second}$, $i(t_p) = \SI{20,85}{\milli\ampere}$
+
+\vspace{0.3cm}
+
+\textbf{Verificación teórica:}
+\[
+i(0{,}00208) = \frac{1}{30}e^{-200 \cdot 0{,}00208}\sin(600 \cdot 0{,}00208) = \frac{1}{30}e^{-0{,}4164}\sin(1{,}2492) \approx \SI{20,85}{\milli\ampere}
+\]
+
+El valor medido coincide con el obtenido analíticamente.
+
+\vspace{0.3cm}
+
+\textbf{4. Tiempo de establecimiento ($t_s$):}
+
+El tiempo de establecimiento es el tiempo necesario para que la respuesta permanezca dentro de una banda del $\pm 2\%$ o $\pm 5\%$ alrededor del valor final.
+
+Tomando como referencia una banda del 2\% respecto el equilibrio, se obtiene que el tiempo de establecimiento es de a ~$t_s(2\%)\approx 12,62 ms$ 
+
+\vspace{0.5cm}
+
+\textbf{Representación gráfica de los parámetros característicos:}
+
+La Figura~\ref{fig:corriente_RLC_avan} muestra la evolución temporal de la corriente con los parámetros característicos medidos. Se observan claramente las oscilaciones amortiguadas, el primer pico en $t_p = \SI{2,08}{\milli\second}$ con amplitud de $\SI{20,85}{\milli\ampere}$, la sobreoscilación del 20\% y el tiempo de establecimiento a los 12,62 ms.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{grafica_avan_I.png}
+    \caption{Simulación de la corriente en la bobina del circuito RLC subamortiguado.}
+    \label{fig:corriente_RLC_avan}
+\end{figure}
+
+\vspace{0.3cm}
+
+\textbf{Relación entre los polos y el comportamiento temporal:}
+Los polos complejos conjugados del sistema, situados en $ s_{1,2} = -\alpha \pm j\omega_d = -200 \pm 600j \, \text{rad/s} $, determinan las características dinámicas del circuito RLC transitorio. Estos polos reflejan las propiedades intrínsecas del sistema y su evolución temporal:
+\vspace{0.1cm}
+\begin{itemize}
+\item \textbf{Estabilidad:} Ambos polos poseen una parte real negativa ($-200 < 0$), lo que garantiza que el sistema es estable, con una respuesta que decae exponencialmente hacia el valor final de cero a medida que transcurre el tiempo.
+\item \textbf{Parte real ($\alpha = 200 \, \text{rad/s}$):} Esta componente controla la rapidez del amortiguamiento. Un valor mayor de $\alpha$ implica un decaimiento más rápido de la envolvente exponencial de las oscilaciones, como se observa en la disminución de las amplitudes de los picos sucesivos en la simulación.
+\item \textbf{Parte imaginaria ($\omega_d = 600 \, \text{rad/s}$):} Esta parte define la frecuencia de oscilación amortiguada y, por tanto, el periodo de las oscilaciones.
+\end{itemize}
+\vspace{0.3cm}
+En definitiva, el análisis de los polos permite predecir con precisión el comportamiento temporal del sistema, incluyendo su estabilidad y las características de amortiguamiento y oscilación. Por esto mismo, es ampliamente utilizado en el diseño de reguladores de control de sistemas, ya que permite optimizar la respuesta dinámica y garantizar la estabilidad y el rendimiento deseados en aplicaciones de ingeniería.
+\vspace{0.8 cm}
+
+
+
+
+
+
+
+
+
+
+
+
+
+El repositorio de esta práctica, en el que se encuentran todos los códigos de \texttt{MATLAB}, archivos de \texttt{Simulink} y figuras generadas, se encuentra en el siguiente enlace de GitHub: 
+
+\begin{center}
+\url{https://github.com/aos739/Problemas-Transitorios---Grupo-4}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

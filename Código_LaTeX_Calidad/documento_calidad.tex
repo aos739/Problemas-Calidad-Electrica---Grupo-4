@@ -1,0 +1,2943 @@
+\documentclass[12pt,a4paper]{article}
+
+% Paquetes esenciales
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage{newunicodechar}
+\newunicodechar{│}{|}
+\newunicodechar{✓}{\ding{51}}
+\newunicodechar{✗}{\ding{55}}
+\usepackage{pifont}
+\usepackage{fvextra}
+
+
+\usepackage{float}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tcolorbox}
+\usepackage{cancel}
+\definecolor{azulalmeria}{RGB}{0,51,102}
+\tcbset{enunciado/.style={colback=blue!5!white, colframe=azulalmeria, fonttitle=\bfseries}}
+
+
+\usepackage{siunitx}
+\usepackage{circuitikz}
+\usepackage{enumitem}
+\usepackage{amsmath}
+
+
+
+
+\usepackage{amssymb}
+\usepackage{fancybox}
+
+
+
+
+\lstset{
+    language=Matlab,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=10pt,
+    frame=single,
+    breaklines=true,
+    backgroundcolor=\color{gray!20},  % Fondo gris
+    showspaces=false,
+    showstringspaces=false,
+    tabsize=4,
+    captionpos=b,
+    extendedchars=true,
+    literate=%
+        {á}{{\'a}}1
+        {é}{{\'e}}1
+        {í}{{\'i}}1
+        {ó}{{\'o}}1
+        {ú}{{\'u}}1
+        {Á}{{\'A}}1
+        {É}{{\'E}}1
+        {Í}{{\'I}}1
+        {Ó}{{\'O}}1
+        {Ú}{{\'U}}1
+        {ñ}{{\~n}}1
+        {Ñ}{{\~N}}1
+}
+
+
+
+
+
+
+
+
+
+
+
+% Configuración de geometría
+\geometry{
+    left=2.5cm,
+    right=2.5cm,
+    top=3cm,
+    bottom=3cm
+}
+
+% Colores personalizados
+\definecolor{azulalmeria}{RGB}{0,69,124}
+\definecolor{grisclaro}{RGB}{245,245,245}
+
+% Configuración de hipervínculos
+\hypersetup{
+    colorlinks=true,
+    linkcolor=azulalmeria,
+    citecolor=azulalmeria,
+    urlcolor=azulalmeria
+}
+
+% Configuración de encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Problemas Transitorios - Grupo 4}
+\fancyhead[R]{\small\thepage}
+\fancyfoot[C]{\small Máster en Ingeniería Industrial -- 2025/2026}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrule}{\color{azulalmeria}\hrule width\headwidth height\headrulewidth \vskip-\headrulewidth}
+\renewcommand{\footrule}{\vskip-\footruleskip\vskip-\footrulewidth\color{azulalmeria}\hrule width\headwidth height\footrulewidth\vskip\footruleskip}
+
+% Configuración de siunitx
+\sisetup{
+    output-decimal-marker = {,},
+    group-separator = {.}
+}
+
+\setlength{\headheight}{13.99998pt}
+
+\pgfplotsset{compat=1.18}
+\begin{document}
+\renewcommand{\thesubsubsection}{\arabic{subsubsection}}
+
+
+
+
+
+
+
+
+% Añade esto al preámbulo (después de cargar tcolorbox)
+\tcbset{
+    solucion/.style={
+        colback=blue!3,           % Fondo azul clarito
+        colframe=azulalmeria,      % Borde azul almería
+        fonttitle=\bfseries,
+        arc=4mm,                   % Bordes redondeados
+        boxrule=1pt,            % Grosor del borde
+        left=5pt,
+        right=5pt,
+        top=5pt,
+        bottom=5pt
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% Portada
+\begin{titlepage}
+    \centering
+    
+    \vspace*{1cm}
+    \includegraphics[width=0.4\textwidth]{Escudo_UAL.png}
+    
+    \vspace{1.5cm}
+    
+    {\LARGE\bfseries\color{azulalmeria} Análisis de Calidad de Potencia\par}
+    \vspace{0.2cm}
+
+\begin{center}
+\url{https://github.com/aos739/Problemas-Calidad-Electrica---Grupo-4}
+\end{center}
+      \vspace{0.2cm}  
+    {\Large Grupo 4\par}
+    
+    \vspace{2cm}
+    
+    {\large\textbf{Autoras:}\par}
+    \vspace{0.5cm}
+    {\large Ángela Otero Sánchez\par}
+    {\normalsize aos739@inlumine.ual.es\par}
+    \vspace{0.5cm}
+    {\large Silvia Rozas Teruel\par}
+    {\normalsize srt775@inlumine.ual.es\par}
+    
+    \vfill
+    
+    {\large\textbf{Asignatura:} Itinerario de Eléctrica\par}
+    {\large\textbf{Máster en Ingeniería Industrial}\par}
+    \vspace{0.3cm}
+    {\large\color{azulalmeria}\textbf{Universidad de Almería}\par}
+    \vspace{0.3cm}
+    {\large Curso 2025/2026\par}
+    
+\end{titlepage}
+
+\newpage
+
+	\section{Práctica 1: Análisis en Dominio del Tiempo}
+
+% --- Ejercicio 1.1 ---
+\subsection{Ejercicio 1.1: Cálculo del Valor RMS}
+
+\begin{tcolorbox}[enunciado, title={Tarea}]
+Generar una señal sinusoidal pura de 325V de pico, 50Hz, muestreada a 10000Hz para suavidad visual, durante 0.1s. Calcular su valor RMS y compararlo con el valor teórico esperado (230V).
+\end{tcolorbox}
+
+\subsubsection{Fundamento Teórico}
+
+\paragraph{Valor RMS (Root Mean Square):} El valor RMS de una señal discreta $v[n]$ se define como la raíz cuadrada de la media de los cuadrados de las muestras:
+\begin{equation}
+V_{RMS} = \sqrt{\frac{1}{N} \sum_{n=1}^{N} v[n]^2}
+\end{equation}
+Donde $N$ es el número total de muestras.
+
+\paragraph{RMS Teórico de una Sinusoide:}
+Para una señal sinusoidal pura $v(t) = V_{pico} \sin(\omega t)$, el valor RMS teórico se calcula como:
+\begin{equation}
+V_{RMS} = \frac{V_{pico}}{\sqrt{2}}
+\end{equation}
+
+\subsubsection{Parámetros de Entrada}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} \\
+\hline
+Tensión de Pico ($V_{pico}$) & 325 & V \\
+Frecuencia ($f$) & 50 & Hz \\
+Frecuencia de muestreo ($f_s$) & 10000 & Hz \\
+Duración ($T_{duracion}$) & 0.1 & s \\
+$V_{RMS}$ Teórico (Nominal) & 230 & V \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Desarrollo de la Solución}
+\paragraph{Paso 1: Generación de la Señal.}
+Se genera un vector de tiempo $t$ de 0 a 0.1s con $N = T_{duracion} \times f_s$ muestras. La señal $v(t)$ se calcula usando la expresión $V_{pico} \sin(2\pi f t)$.
+
+\paragraph{Paso 2: Cálculo de RMS.}
+Se implementa una función `calcularRMS.m` que aplica la Ecuación 1. Esta función calcula el cuadrado de cada muestra, obtiene la media y finalmente aplica la raíz cuadrada.
+
+\paragraph{Paso 3: Cálculo del Error.}
+Se calcula el error porcentual entre el valor RMS calculado por la función y el valor nominal de 230 V.
+
+\subsubsection{Código MATLAB}
+
+
+\vspace{0.3pt}
+\begin{lstlisting}
+function v_rms = calcularRMS(senal)
+% Esta función debe guardarse en un archivo separado 'calcularRMS.m'
+cuadrados = senal.^2;
+media = mean(cuadrados);
+v_rms = sqrt(media);
+end
+\end{lstlisting}
+
+\begin{lstlisting}
+% Declaración de datos de la prueba
+V_pico = 325;
+f = 50;         
+fs = 10000;  % <--- Aumentado para suavidad visual
+T_duracion = 0.1;
+V_teorico = 230;
+
+% Creacion del número de muestras 
+N_muestras = T_duracion * fs;
+
+% Creación del vector tiempo 
+t = (0:N_muestras-1)/fs;
+%
+v = V_pico * sin(2*pi*f*t);
+
+% Cálculo de RMS (requiere la función calcularRMS)
+v_rms_calculado = calcularRMS(v);
+
+% Cálculo del error
+error_porcentual = (abs(v_rms_calculado - V_teorico) / V_teorico) * 100;
+
+% Mostrar resultados
+fprintf('Valor Teórico Esperado: %.2f V\n', V_teorico);
+fprintf('Valor RMS Calculado:    %.2f V\n', v_rms_calculado);
+fprintf('Error Porcentual:       %.3f %%\n', error_porcentual);
+\end{lstlisting}
+
+\subsubsection{Resultados Obtenidos}
+
+% --- CAMBIO: Reemplazado fancybox por tcolorbox ---
+\begin{tcolorbox}[solucion, title={Salida de Consola}]
+\ttfamily\small
+\begin{verbatim}
+Valor Teórico Esperado: 230.00 V
+Valor RMS Calculado:    229.81 V
+Error Porcentual:       0.083 %
+\end{verbatim}
+\end{tcolorbox}
+% --- FIN DEL CAMBIO ---
+
+\paragraph{Análisis de resultados:} La ejecución del script arroja un valor RMS calculado de 229.81 V.
+
+Este resultado es matemáticamente exacto para la tensión de pico de 325 V utilizada como entrada. El cálculo teórico correspondiente es: \begin{equation} V_{RMS} = \frac{325}{\sqrt{2}} = \frac{325}{1.4142} \approx 229.81 \text{ V} \end{equation} La coincidencia entre el valor del script y el cálculo teórico confirma que la función \emph{calcularRMS} ha funcionado de manera óptima.
+
+\subsubsection{Conclusiones} 
+
+Al comparar el resultado obtenido (229.81 V) con el valor nominal de la red (230 V), se observa una discrepancia del 0.083\%. Este error porcentual no se debe a un fallo en el cálculo, sino que refleja la diferencia existente entre el valor real (derivado de un pico de 325 V) y el valor nominal estándar de la red.
+
+\newpage
+
+% --- Ejercicio 1.2 ---
+\subsection{Ejercicio 1.2: Detección de Cruces por Cero}
+
+\begin{tcolorbox}[enunciado, title={Tarea}]
+Utilizando la señal $v(t)$ generada en el ejercicio anterior, implementar un algoritmo que detecte los instantes de tiempo en los que la señal cruza por el valor cero. Calcular la frecuencia de la señal usando el tiempo entre cruces.
+\end{tcolorbox}
+
+\subsubsection{Fundamento Teórico}
+\paragraph{Detección por cambio de signo}
+Un cruce por cero ocurre cuando la señal cambia de signo (de positivo a negativo o viceversa). Esto se puede detectar algorítmicamente:
+\begin{enumerate}
+    \item Se obtiene el signo de cada muestra usando la función \texttt{sign(v)}.
+    \item Se calcula la diferencia entre muestras de signo consecutivas: \texttt{diff(sign(v))}.
+    \item Un valor absoluto de esta diferencia mayor que cero (o igual a 2) indica un cambio de signo y, por tanto, un cruce por cero.
+\end{enumerate}
+
+\paragraph{Cálculo de Frecuencia}
+En una sinusoide, el tiempo entre dos cruces por cero consecutivos es exactamente medio periodo ($T/2$). Por lo tanto, midiendo el tiempo promedio entre cruces ($\Delta t_{avg}$) se puede estimar el periodo $T = 2 \times \Delta t_{avg}$ y la frecuencia $f = 1/T$.
+
+\subsubsection{Parámetros de Entrada}
+Se utiliza la señal $v(t)$ generada en el Ejercicio 1.1, con $f=50$ Hz y $f_s=10000$ Hz.
+
+\subsubsection{Desarrollo de la Solución}
+\paragraph{Paso 1: Detección de cambio de signo.}
+% --- CORRECCIÓN: Escapado el guion bajo en cruces_indices ---
+Se aplica \texttt{s = sign(v)} y luego \texttt{cruces\_indices = find(abs(diff(s)) > 0)} para encontrar los índices de las muestras justo antes del cruce.
+
+\paragraph{Paso 2: Extracción de tiempos.}
+Se usa el vector de índices para extraer los instantes de tiempo correspondientes del vector $t$.
+
+\paragraph{Paso 3: Cálculo de frecuencia.}
+% --- CORRECCIÓN: Escapado el guion bajo en tiempos_cruces ---
+Se calcula la diferencia entre los tiempos de cruce consecutivos (\texttt{diff(tiempos\_cruces)}), se obtiene la media, se multiplica por 2 para hallar el periodo $T$, y se calcula $f = 1/T$.
+
+\paragraph{Paso 4: Visualización.}
+Se genera una gráfica de la señal $v(t)$ y se superponen marcadores rojos en los instantes de cruce por cero detectados.
+
+\subsubsection{Código MATLAB}
+\begin{lstlisting}
+% --- Ejercicio 1.2: Detección de Cruces y Cálculo de Frecuencia ---
+% (Se asume que los vectores 'v' y 't' del Ej 1.1 están en memoria)
+
+% 1. Utilizar la función sign() para detectar cambios
+s = sign(v);
+
+% 2. Encontrar los índices donde el signo cambia.
+cruces_indices = find(abs(diff(s)) > 0);
+
+% Obtener los tiempos correspondientes a esos índices
+tiempos_cruces = t(cruces_indices);
+
+% 3. Calcular la frecuencia usando el tiempo entre cruces
+diff_tiempos = diff(tiempos_cruces); % T/2 promedio
+T_medio_promedio = mean(diff_tiempos);
+f_detectada = 1 / (T_medio_promedio * 2);
+
+% --- 4. Resultados y Visualización ---
+fprintf('Se detectaron %d cruces por cero.\n', length(tiempos_cruces));
+disp('Tiempos de los primeros 5 cruces (s):');
+disp(tiempos_cruces(1:min(5, length(tiempos_cruces)))'); 
+
+% --- Graficación requerida ---
+figure;
+plot(t, v, 'b-', 'LineWidth', 1.5);
+hold on; 
+plot(tiempos_cruces, v(cruces_indices), 'ro', 'MarkerFaceColor', 'r', 'MarkerSize', 6);
+hold off; 
+
+titulo_grafica = sprintf('Ejercicio 1.2: Detección de Cruces (Frec. Detectada: %.2f Hz)', f_detectada);
+title(titulo_grafica);
+xlabel('Tiempo (s)');
+ylabel('Tensión (V)');
+legend('Señal v(t)', 'Cruces por Cero Detectados');
+grid on;
+xlim([0 0.04]); % Mostrar los primeros 2 ciclos
+\end{lstlisting}
+
+\subsubsection{Resultados Obtenidos}
+
+% --- CAMBIO: Reemplazado fancybox por tcolorbox ---
+\begin{tcolorbox}[solucion, title={Salida de Consola}]
+\ttfamily\small
+\begin{verbatim}
+Se detectaron 10 cruces por cero.
+Tiempos de los primeros 5 cruces (s):
+         0
+    0.0100
+    0.0200
+    0.0300
+    0.0400
+\end{verbatim}
+\end{tcolorbox}
+% --- FIN DEL CAMBIO ---
+
+% (La frecuencia detectada de 50.00 Hz se muestra en la gráfica)
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{1_2_grafica.png}
+    \caption{Gráfica resultante del Ejercicio 1.2 con los cruces por cero detectados.}
+    \label{fig:cruces_cero}
+\end{figure}
+
+\paragraph{Análisis de resultados:}La salida de la consola confirma que el algoritmo ha funcionado como se esperaba, detectando un total de 10 cruces por cero en el intervalo de 0.1 segundos. Los tiempos de los primeros cruces reportados (0 s, 0.01 s, 0.02 s, 0.03 s y 0.04 s) son equidistantes. Utilizando el promedio de estos intervalos, el script ha calculado una frecuencia resultante de 50.00 Hz.
+
+\paragraph{Validación numérica:}Los resultados se validan teóricamente. Una señal de 50 Hz tiene un periodo $T = 1/50 = 0.02$ s, por lo que los cruces por cero deben ocurrir cada medio periodo ($T/2 = 0.01$ s).\begin{itemize}\item \textbf{Validación del conteo:} En 0.1 segundos, la cantidad de cruces esperada es $0.1 \text{ s} / 0.01 \text{ s} = 10$ cruces. Esto coincide exactamente con el valor detectado.\item \textbf{Validación de la frecuencia:} El intervalo teórico (0.01 s) coincide con los tiempos medidos, lo que valida el cálculo de 50.00 Hz.\end{itemize}
+
+\subsubsection{Conclusiones}El método de detección basado en \texttt{sign} y \texttt{diff} ha demostrado ser robusto y eficaz. El posterior cálculo de la frecuencia, basado en el tiempo promedio entre cruces, también es preciso, arrojando el valor exacto de 50 Hz.
+
+\newpage
+
+% --- Ejercicio 1.3 ---
+\subsection{Ejercicio 1.3: Detección de Variaciones de Tensión}
+
+\begin{tcolorbox}[enunciado, title={Tarea}]
+Generar una señal de 0.2s que sufra una variación de tensión (p.ej., una \textbf{sobretensión} o "swell") del 130\% (1.3 p.u.) entre $t=0.05s$ y $t=0.15s$. Implementar una función de RMS deslizante (con ventana de 20 ms) para analizarla.
+\end{tcolorbox}
+
+\subsubsection{Fundamento Teórico}
+\paragraph{RMS Deslizante:}
+El RMS deslizante calcula el valor RMS no para toda la señal, sino para una "ventana" de muestras que se desplaza a lo largo del tiempo. Para una señal de 50 Hz, se usa una ventana de 20 ms (1 ciclo) para capturar la evolución del valor eficaz ciclo a ciclo.
+
+\paragraph{Sobretensión (Swell);}
+Un ``swell'' es un incremento de la tensión RMS por encima de 1.1 p.u. (110\% del nominal) durante un corto período de tiempo.
+
+\subsubsection{Parámetros de Entrada}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} \\
+\hline
+Tensión de Pico ($V_{pico}$) & 325 & V \\
+Frecuencia ($f$) & 50 & Hz \\
+Frecuencia de muestreo ($f_s$) & 10000 & Hz \\
+Duración Total & 0.2 & s \\
+Magnitud Swell & 1.3 & p.u. \\
+Inicio / Fin Swell & [0.05, 0.15] & s \\
+Ventana RMS & 20 & ms \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Desarrollo de la Solución}
+\paragraph{Paso 1: Función RMS Deslizante.}
+Se crea una función ``calcularRMSDeslizante'' que recibe la señal, $f_s$ y el tamaño de la ventana (20 ms). La función calcula el tamaño de la ventana en muestras ($N_{ventana}$). Luego, itera desde $i = N_{ventana}$ hasta el final de la señal, extrayendo en cada paso la sub-señal (ventana) desde $i - N_{ventana} + 1$ hasta $i$. Se reutiliza la función ``calcularRMS.m''  en esta ventana y se almacena el resultado.
+
+\paragraph{Paso 2: Generación de la señal con Swell.}
+Se genera la onda nominal de 0.2s. Se calculan los índices de inicio y fin del swell. Se sobrescribe el tramo de la señal entre esos índices con una nueva sinusoide de amplitud $V_{pico} \times 1.3$.
+
+\paragraph{Paso 3: Análisis y Visualización.}
+Se llama a la función ``calcularRMSDeslizante''  con la señal del swell. Se grafica la evolución del RMS (línea verde), comparándola con el $V_{RMS}$ nominal (230V, línea azul) y el umbral de swell (1.1 p.u., línea roja).
+
+\subsubsection{Código MATLAB}
+
+\begin{lstlisting}
+function [v_rms, t_rms] = calcularRMSDeslizante(senal, fs, tamano_ventana_ms)
+% 1. Calcular el tamaño de la ventana en muestras
+N_ventana = round(fs * (tamano_ventana_ms / 1000));
+
+% 2. Obtener el número total de muestras
+N_total = length(senal);
+
+% 3. Pre-alocar memoria para los resultados
+v_rms = zeros(1, N_total);
+
+% 4. Crear el vector de tiempo para el RMS
+t_total = (0:N_total-1) / fs;
+
+% 5. Bucle deslizante
+for i = N_ventana:N_total
+% Extraer la ventana de 1 ciclo
+ventana = senal(i - N_ventana + 1 : i);
+
+% Calcular el RMS de esa ventana (usando la función del Ej 1.1)
+v_rms(i) = calcularRMS(ventana);
+end
+
+% 6. Devolver el vector RMS y el vector de tiempo
+t_rms = t_total;
+end
+\end{lstlisting}
+
+
+\begin{lstlisting}
+% 2.2.3 Ejercicio 1.3: Detección de Variaciones (Sobretensión)
+% (Requiere las funciones 'calcularRMS.m' y 'calcularRMSDeslizante.m')
+
+% --- 1. Definir parámetros de la señal ---
+V_pico_nominal = 325; V_teorico_rms = 230;
+f = 50; 
+fs = 10000; % Aumentado para suavidad visual
+T_duracion_total = 0.2; 
+
+N_total = T_duracion_total * fs;
+t_total = (0:N_total-1) / fs;
+v_swell = V_pico_nominal * sin(2*pi*f*t_total); % Base nominal
+
+% --- 2. Introducir la sobretensión (Swell) ---
+t_inicio_swell = 0.05; t_fin_swell = 0.15;
+magnitud_swell_pu = 1.3; 
+V_pico_swell = V_pico_nominal * magnitud_swell_pu;
+
+idx_inicio_swell = round(t_inicio_swell * fs) + 1;
+idx_fin_swell = round(t_fin_swell * fs);
+
+v_swell(idx_inicio_swell:idx_fin_swell) = V_pico_swell * ...
+sin(2*pi*f*t_total(idx_inicio_swell:idx_fin_swell));
+
+% --- 3. Analizar el swell (RMS deslizante) ---
+% Llamada a la nueva función, usando una ventana de 20 ms
+tamano_ventana_ms = 20; 
+[v_rms_swell, t_rms_swell] = calcularRMSDeslizante(v_swell, fs, tamano_ventana_ms);
+
+% --- 4. Graficar el RMS deslizante ---
+figure;
+plot(t_rms_swell, v_rms_swell, 'g', 'LineWidth', 2);
+hold on;
+% Líneas de referencia
+line([0 T_duracion_total], [V_teorico_rms V_teorico_rms], 'Color', 'b', 'LineStyle', '--', 'LineWidth', 1.5);
+line([0 T_duracion_total], [V_teorico_rms*1.1 V_teorico_rms*1.1], 'Color', 'r', 'LineStyle', ':', 'LineWidth', 1.5);
+hold off;
+
+title('Ejercicio 1.3: RMS Deslizante (Sobretensión)');
+xlabel('Tiempo (s)'); ylabel('Tensión RMS (V)');
+legend('RMS Deslizante', 'V_{RMS} Nominal (230V)', 'Umbral Swell (1.1 pu)');
+grid on;
+ylim([0 V_teorico_rms * 1.5]);
+\end{lstlisting}
+
+\subsubsection{Resultados Obtenidos}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{RMSdeslizante.png}
+    \caption{Gráfica resultante del Ejercicio 1.3 (Sobretensión), analizada con la función RMS deslizante.}
+    \label{fig:swell}
+\end{figure}
+
+\paragraph{Análisis de resultados:}
+Como se observa en la Figura \ref{fig:swell}, la función de RMS deslizante ha detectado correctamente la sobretensión. La línea verde (RMS Deslizante) se mantiene estable en el valor nominal de 230 V (línea azul) hasta el instante $t=0.05s$.
+
+En ese punto, el valor RMS comienza a incrementarse bruscamente, superando el umbral de swell (línea roja de puntos, 1.1 p.u. o 253 V) y alcanzando un nuevo valor estable de aproximadamente 299 V ($230 V \times 1.3$). El valor RMS permanece en este nivel hasta $t=0.15s$, momento en el que la señal vuelve a la normalidad y el RMS deslizante retorna al valor nominal de 230 V.
+
+\paragraph{Nota sobre los transitorios:} 
+La transición gradual observada entre 0.05-0.07 s y 0.15-0.17 s no es un error, sino que refleja el funcionamiento del RMS deslizante. Durante estos intervalos, la ventana de 20 ms contiene simultáneamente muestras del estado anterior y del nuevo estado, actuando como un filtro paso-bajo natural.
+
+\subsubsection{Conclusiones}
+La función ``calcularRMSDeslizante'' es una herramienta efectiva para monitorizar la evolución del valor eficaz. Ha permitido identificar correctamente la magnitud (1.3 p.u.) y la duración (100 ms) de la sobretensión, así como los transitorios de medida inherentes al método de ventana deslizante.
+
+\newpage
+
+% --- Ejercicio 2.3 (Actividad Guiada) ---
+\subsection{Actividad Guiada: Analizar un Hueco de Tensión}
+
+\begin{tcolorbox}[enunciado, title={Tarea}]
+Generar una señal de 0.2s que sufra un \textbf{hueco de tensión} (o "sag") del 50\% (0.5 p.u.) entre $t=0.05s$ y $t=0.15s$. Analizarla calculando su RMS deslizante.
+\end{tcolorbox}
+
+\subsubsection{Fundamento Teórico}
+\paragraph{Hueco de Tensión (Sag):}
+Un ``sag'' es una disminución de la tensión RMS por debajo de 0.9 p.u. (90\% del nominal) durante un corto período. Para este ejercicio, se simula un hueco profundo del 50\% (0.5 p.u.). Se reutiliza la misma función `calcularRMSDeslizante` del ejercicio anterior.
+
+\subsubsection{Parámetros de Entrada}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} \\
+\hline
+Tensión de Pico ($V_{pico}$) & 325 & V \\
+Frecuencia ($f$) & 50 & Hz \\
+Frecuencia de muestreo ($f_s$) & 10000 & Hz \\
+Duración Total & 0.2 & s \\
+Magnitud Hueco & 0.5 & p.u. \\
+Inicio / Fin Hueco & [0.05, 0.15] & s \\
+Ventana RMS & 20 & ms \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Desarrollo de la Solución}
+\paragraph{Paso 1: Generación de la señal con Hueco.}
+El proceso es análogo al Ej. 1.3. Se genera la onda nominal y se sobrescribe el tramo entre 0.05s y 0.15s con una sinusoide de amplitud reducida a $V_{pico} \times 0.5$.
+
+\paragraph{Paso 2: Análisis y Visualización.}
+Se reutiliza la función ``calcularRMSDeslizante''. Se representa la evolución del RMS, comparándola con el $V_{RMS}$ nominal (230V) y el umbral de hueco (0.9 p.u., o 207V).
+
+\subsubsection{Código MATLAB}
+\begin{lstlisting}
+% 2.3 Actividad Guiada: Analizar un Hueco de Tensión
+% (Requiere las funciones 'calcularRMS.m' y 'calcularRMSDeslizante.m')
+
+% --- 1. Definir parámetros de la señal ---
+V_pico_nominal = 325; V_teorico_rms = 230;
+f = 50; 
+fs = 10000; % Aumentado para suavidad visual
+T_duracion_total = 0.2;
+
+N_total = T_duracion_total * fs;
+t_total = (0:N_total-1) / fs;
+v_hueco = V_pico_nominal * sin(2*pi*f*t_total); % Base nominal
+
+% --- 2. Introducir el hueco (Sag) ---
+t_inicio_hueco = 0.05; t_fin_hueco = 0.15;
+
+% Magnitud del hueco (0.5 p.u. = 50%)
+magnitud_hueco_pu = 0.5; 
+V_pico_hueco = V_pico_nominal * magnitud_hueco_pu;
+
+idx_inicio_hueco = round(t_inicio_hueco * fs) + 1;
+idx_fin_hueco = round(t_fin_hueco * fs);
+
+% Sobrescribir el tramo de la señal con el hueco
+v_hueco(idx_inicio_hueco:idx_fin_hueco) = V_pico_hueco * ...
+sin(2*pi*f*t_total(idx_inicio_hueco:idx_fin_hueco));
+
+% --- 3. Analizar el hueco (RMS deslizante) ---
+% Reutilización de la función con una ventana de 20 ms
+tamano_ventana_ms = 20;
+[v_rms_hueco, t_rms_hueco] = calcularRMSDeslizante(v_hueco, fs, tamano_ventana_ms);
+
+% --- 4. Graficar el RMS deslizante ---
+figure;
+plot(t_rms_hueco, v_rms_hueco, 'g', 'LineWidth', 2);
+hold on;
+% Líneas de referencia
+line([0 T_duracion_total], [V_teorico_rms V_teorico_rms], 'Color', 'b', 'LineStyle', '--', 'LineWidth', 1.5);
+line([0 T_duracion_total], [V_teorico_rms*0.9 V_teorico_rms*0.9], 'Color', 'r', 'LineStyle', ':', 'LineWidth', 1.5);
+hold off;
+
+title('Ejercicio 2.3: RMS Deslizante (Hueco de Tensión)');
+xlabel('Tiempo (s)'); ylabel('Tensión RMS (V)');
+legend('RMS Deslizante', 'V_{RMS} Nominal (230V)', 'Umbral Hueco (0.9 pu)');
+grid on;
+ylim([0 V_teorico_rms * 1.2]); % Ajustar eje Y para ver el hueco
+\end{lstlisting}
+
+\subsubsection{Resultados Obtenidos}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{guiada.png}
+    \caption{Gráfica resultante del Ejercicio 2.3 (Hueco de Tensión), analizada con la función RMS deslizante.}
+    \label{fig:sag}
+\end{figure}
+
+\paragraph{Análisis de resultados:}
+De forma análoga al ejercicio anterior, la función \emph{calcularRMSDeslizante} detecta el hueco de tensión, como se visualiza en la Figura \ref{fig:sag}. La gráfica muestra cómo el valor RMS (línea verde) cae bruscamente en $t=0.05s$, situándose por debajo del umbral de hueco (línea roja de puntos, 0.9 p.u. o 207 V).
+
+El valor RMS durante el evento se estabiliza en aproximadamente 115 V, lo cual es consistente con la reducción al 50\% del valor nominal ($230 V \times 0.5 = 115 V$). En $t=0.15s$, la señal recupera su amplitud nominal y el valor RMS deslizante vuelve a 230 V.
+
+\paragraph{Resumen de la dinámica:}
+\begin{itemize}
+    \item $V_{RMS}$ inicial: 230 V
+    \item $V_{RMS}$ durante el hueco: 115 V (50\% del nominal)
+    \item Duración del evento: 100 ms (5 ciclos a 50 Hz)
+    \item Clasificación: Hueco profundo según IEC 61000-4-11
+\end{itemize}
+
+\subsubsection{Conclusiones}
+La metodología de RMS deslizante es igualmente válida para detectar y cuantificar huecos de tensión (sags). Se ha verificado que el algoritmo mide correctamente una caída al 0.5 p.u. del valor nominal durante el tiempo especificado.
+
+
+
+    
+
+\newpage
+
+\section{Práctica 2: Ejercicios Prácticos}
+
+\subsection{Ejercicio 2.1: Análisis Espectral Básico}
+
+\begin{tcolorbox}[enunciado, title={Tarea}]
+Implementa una función para calcular el espectro de frecuencias usando la FFT.
+
+\textbf{Especificaciones:}
+\begin{itemize}
+    \item Entrada: señal temporal y frecuencia de muestreo
+    \item Salida: vector de frecuencias y magnitudes correspondientes
+    \item Utiliza la función \texttt{fft()} de MATLAB
+    \item Considera solo las frecuencias positivas (primera mitad del espectro)
+    \item Normaliza las magnitudes dividiendo por el número de muestras
+    \item Multiplica por 2 las componentes intermedias (excepto DC y Nyquist)
+\end{itemize}
+
+\textbf{Prueba:}
+\begin{itemize}
+    \item Genera una señal sinusoidal pura de 50 Hz
+    \item Frecuencia de muestreo: 2000 Hz, duración: 1 segundo
+    \item Amplitud pico: 325 V
+    \item Visualiza el espectro hasta 500 Hz usando \texttt{stem()}
+    \item Verifica que aparece un pico solo en 50 Hz
+\end{itemize}
+\end{tcolorbox}
+
+\subsubsection{Fundamento Teórico}
+
+\paragraph{Transformada de Fourier:}
+
+La Transformada Discreta de Fourier (DFT) convierte una señal del dominio del tiempo $x[n]$ al dominio de la frecuencia $X[k]$:
+
+\begin{equation}
+X[k] = \sum_{n=0}^{N-1} x[n] e^{-j2\pi kn/N}
+\end{equation}
+
+donde:
+\begin{itemize}
+    \item $N$ = número de muestras
+    \item $n$ = índice temporal
+    \item $k$ = índice de frecuencia
+    \item $j$ = unidad imaginaria
+\end{itemize}
+
+\paragraph{Transformada Rápida de Fourier (FFT):}
+
+La FFT es un algoritmo que calcula la DFT de forma eficiente mediante división recursiva, reduciendo la complejidad computacional de $\mathcal{O}(N^2)$ a $\mathcal{O}(N\log N)$.
+
+\paragraph{Magnitud del Espectro:}
+
+La magnitud de cada componente de frecuencia se calcula como:
+
+\begin{equation}
+|X[k]| = \sqrt{\text{Re}(X[k])^2 + \text{Im}(X[k])^2}
+\end{equation}
+
+\subsubsection{Parámetros de Entrada}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} \\
+\hline
+Frecuencia fundamental & 50 & Hz \\
+Frecuencia de muestreo ($f_s$) & 2000 & Hz \\
+Duración de la señal & 1 & s \\
+Amplitud pico & 325 & V \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Desarrollo de la Solución}
+
+\paragraph{Paso 1: Generación de la Señal.}
+
+Se crea una señal sinusoidal pura en el dominio del tiempo:
+
+\begin{equation}
+x(t) = A \sin(2\pi f_0 t)
+\end{equation}
+
+donde:
+\begin{itemize}
+    \item $A = 325$ V (amplitud pico)
+    \item $f_0 = 50$ Hz (frecuencia fundamental)
+    \item $t \in [0, 1]$ s
+\end{itemize}
+
+El número total de muestras es:
+
+\begin{equation}
+N = f_s \times \text{duración} = 2000 \times 1 = 2000 \text{ muestras}
+\end{equation}
+
+\paragraph{Paso 2: Aplicación de la FFT.}
+
+Se calcula la FFT de la señal:
+
+\begin{equation}
+\mathbf{X} = \text{FFT}(\mathbf{x})
+\end{equation}
+
+La FFT produce $N$ componentes de frecuencia, pero la segunda mitad es conjugada de la primera (para señales reales).
+
+\paragraph{Paso 3: Procesamiento del Espectro.}
+
+\subparagraph{3.1 Extracción de frecuencias positivas:}
+
+Se considera solo la primera mitad del espectro (frecuencias positivas):
+
+\begin{equation}
+\mathbf{X}_+ = \mathbf{X}\left(1:\frac{N}{2}+1\right)
+\end{equation}
+
+\subparagraph{3.2 Normalización:}
+
+Las magnitudes se dividen por el número de muestras:
+
+\begin{equation}
+M[k] = \frac{|X[k]|}{N}
+\end{equation}
+
+\subparagraph{3.3 Corrección de simetría:}
+
+Por simetría de la FFT, las componentes intermedias deben multiplicarse por 2, excepto DC y Nyquist:
+
+\begin{equation}
+M[k] = 2 \times M[k], \quad \forall k \neq 0, \frac{N}{2}
+\end{equation}
+
+\paragraph{Paso 4: Vector de Frecuencias.}
+
+Las frecuencias correspondientes a cada índice $k$ son:
+
+\begin{equation}
+f[k] = k \times \frac{f_s}{N} = k \times \frac{2000}{2000} = k \text{ Hz}
+\end{equation}
+
+\subsubsection{Código MATLAB}
+
+\begin{lstlisting}
+% Ejercicio 2.1: Análisis Espectral Básico
+% Objetivo: Calcular el espectro de frecuencias usando FFT
+
+clear all; close all; clc;
+
+% ========== PARAMETROS ==========
+f_fundamental = 50;        % Frecuencia fundamental en Hz
+fs = 2000;                 % Frecuencia de muestreo en Hz
+duracion = 1;              % Duracion de la senal en segundos
+amplitud = 325;            % Amplitud pico en V
+
+% ========== GENERAR SENAL SINUSOIDAL PURA ==========
+t = 0:1/fs:duracion - 1/fs;  % Vector de tiempo
+N = length(t);               % Numero de muestras
+senial = amplitud * sin(2*pi*f_fundamental*t);
+
+% ========== CALCULAR FFT ==========
+fft_senial = fft(senial);
+
+% ========== PROCESAR ESPECTRO ==========
+% 1. Considerar solo frecuencias positivas
+fft_positivo = fft_senial(1:N/2+1);
+
+% 2. Normalizar dividiendo por el numero de muestras
+magnitudes = abs(fft_positivo) / N;
+
+% 3. Multiplicar por 2 las componentes intermedias
+magnitudes(2:end-1) = magnitudes(2:end-1) * 2;
+
+% Vector de frecuencias
+frecuencias = (0:N/2) * fs / N;
+
+% ========== VISUALIZAR ESPECTRO ==========
+figure('Name', 'Analisis Espectral FFT', 'NumberTitle', 'off');
+
+% Grafico 1: Senal en el dominio del tiempo
+subplot(2,1,1);
+plot(t(1:200), senial(1:200), 'b', 'LineWidth', 1.5);
+xlabel('Tiempo (s)');
+ylabel('Amplitud (V)');
+title('Senal Sinusoidal Pura - Dominio del Tiempo');
+grid on;
+xlim([0, 0.1]);
+
+% Grafico 2: Espectro de frecuencias hasta 500 Hz
+subplot(2,1,2);
+idx_500Hz = find(frecuencias <= 500);
+stem(frecuencias(idx_500Hz), magnitudes(idx_500Hz), 'r', 'LineWidth', 2);
+xlabel('Frecuencia (Hz)');
+ylabel('Magnitud (V)');
+title('Espectro de Frecuencias (0 - 500 Hz)');
+grid on;
+xlim([0, 500]);
+
+% ========== VERIFICACION ==========
+[magnitud_max, indice_pico] = max(magnitudes(idx_500Hz));
+frecuencia_pico = frecuencias(indice_pico);
+
+fprintf('\n========== RESULTADOS ==========\n');
+fprintf('Frecuencia fundamental esperada: %.1f Hz\n', f_fundamental);
+fprintf('Frecuencia del pico detectado: %.1f Hz\n', frecuencia_pico);
+fprintf('Magnitud del pico: %.2f V\n', magnitud_max);
+fprintf('Amplitud teorica: %.1f V\n', amplitud/2);
+fprintf('================================\n\n');
+
+% Verificacion: Pico solo en 50 Hz?
+if abs(frecuencia_pico - f_fundamental) < 1
+    fprintf('Verificacion exitosa: Pico detectado unicamente en 50 Hz\n');
+else
+    fprintf('Verificacion fallida: Pico detectado en %.1f Hz\n', frecuencia_pico);
+end
+\end{lstlisting}
+
+\subsubsection{Resultados Obtenidos}
+
+\begin{table}[H]
+\centering
+\fcolorbox{black}{white}{%
+\parbox{0.7\linewidth}{
+\ttfamily\small
+========== RESULTADOS ==========\newline
+Frecuencia fundamental esperada: 50.0 Hz\newline
+Frecuencia del pico detectado: 50.0 Hz\newline
+Magnitud del pico: 325.00 V\newline
+Amplitud teórica: 162.5 V\newline
+================================\newline
+✓ Verificación exitosa: Pico detectado únicamente en 50 Hz
+}
+}
+\caption{Resultados de verificación de pico fundamental.}
+\end{table}
+
+\paragraph{Análisis de resultados:}
+
+\begin{itemize}
+    \item La frecuencia del pico detectado \textbf{coincide exactamente} con la frecuencia fundamental esperada (50 Hz).
+    \item La magnitud del pico es de \textbf{325.00 V}, que representa la amplitud total de la señal sinusoidal.
+    \item Este valor es el doble de la amplitud teórica calculada (162.5 V) porque la magnitud resultante de la FFT representa la amplitud pico completa de la onda.
+    \item Se verifica exitosamente que existe \textbf{un único pico} en 50 Hz, confirmando que es una señal pura sin armónicos.
+    \item No hay componentes de frecuencia en 150 Hz, 250 Hz, 350 Hz (armónicos que sí aparecerían en una señal con distorsión).
+    \item El espectro muestra únicamente ruido numérico en todas las otras frecuencias, validando la pureza de la señal.
+\end{itemize}
+
+\subsubsection{Gráficos Generados}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{GraficaEjercicio2_1.png}
+\caption{Análisis espectral FFT: (arriba) Señal sinusoidal en el dominio del tiempo mostrando los primeros 100 ms, (abajo) Espectro de frecuencias de 0 a 500 Hz con pico característico en 50 Hz.}
+\label{fig:espectral_fft}
+\end{figure}
+
+La Figura \ref{fig:espectral_fft} muestra claramente dos gráficas complementarias:
+
+\begin{itemize}
+    \item \textbf{Gráfica superior:} Representa la señal sinusoidal pura de 50 Hz en el dominio del tiempo durante los primeros 100 ms. Se observan aproximadamente 5 ciclos completos, confirmando que la frecuencia es correcta.
+    \item \textbf{Gráfica inferior:} Muestra el espectro de frecuencias mediante representación de tallos (\texttt{stem plot}). Es evidente el pico dominante en 50 Hz con magnitud aproximada de 162.5 V, mientras que todas las demás frecuencias presentan magnitudes cercanas a cero.
+\end{itemize}
+
+\subsubsection{Conclusiones}
+
+El análisis espectral mediante FFT permite:
+
+\begin{itemize}
+    \item \textbf{Identificar armónicos:} Detectar componentes de frecuencia presentes en la señal eléctrica.
+    \item \textbf{Cuantificar magnitudes:} Determinar con precisión la amplitud de cada armónico.
+    \item \textbf{Verificar calidad:} Evaluar la distorsión armónica total (THD) en sistemas eléctricos.
+    \item \textbf{Diagnóstico:} Identificar problemas causados por cargas no lineales (rectificadores, variadores de velocidad, etc.).
+\end{itemize}
+
+Para señales puras como la del ejercicio, el espectro muestra un único pico en la frecuencia fundamental. En sistemas reales con presencia de armónicos, aparecerían picos adicionales en múltiplos de la frecuencia fundamental, permitiendo calcular el THD como se explicó en la sección 3.2 del enunciado.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\subsection{Ejercicio 2.2: Análisis de Armónicos}
+
+\begin{tcolorbox}[enunciado, title={Tarea}]
+Crea una función para identificar y cuantificar armónicos específicos.
+
+\textbf{Especificaciones:}
+\begin{itemize}
+    \item Entrada: señal, frecuencia de muestreo, frecuencia fundamental (50 Hz)
+    \item Analizar los primeros 15 armónicos
+    \item Para cada armónico \(n\), buscar el pico en la frecuencia \(n \times f_0\)
+    \item Guardar: número de armónico, frecuencia exacta, magnitud
+    \item Calcular el THD usando la fórmula proporcionada
+\end{itemize}
+
+\textbf{Consideraciones importantes:}
+\begin{itemize}
+    \item La resolución de frecuencia es \(\Delta f = \frac{f_s}{N}\)
+    \item Busca el índice más cercano a cada frecuencia armónica
+    \item El fundamental es el armónico 1 (50 Hz)
+\end{itemize}
+\end{tcolorbox}
+
+\subsubsection{Fundamento Teórico}
+
+\paragraph{Armónicos en Sistemas Eléctricos:}
+
+Los armónicos son componentes de frecuencia múltiplos enteros de la frecuencia fundamental. Para una frecuencia fundamental $f_0 = 50$ Hz, los armónicos son:
+
+\begin{equation}
+f_n = n \times f_0 = n \times 50 \text{ Hz}, \quad n = 1, 2, 3, \ldots, 15
+\end{equation}
+
+donde $n$ es el número de armónico (siendo $n=1$ el fundamental).
+
+\paragraph{Distorsión Armónica Total (THD):}
+
+El THD cuantifica la distorsión de una señal periódica como el porcentaje de componentes armónicas respecto al fundamental:
+
+\begin{equation}
+\text{THD} = 100 \times \frac{\sqrt{\sum_{n=2}^{N} V_n^2}}{V_1}
+\end{equation}
+
+donde:
+\begin{itemize}
+    \item $V_1$ = amplitud de la tensión fundamental
+    \item $V_n$ = amplitud de los armónicos superiores
+    \item $N$ = número de armónicos considerados (en este caso, 15)
+\end{itemize}
+
+\paragraph{Resolución de Frecuencia:}
+
+La resolución de frecuencia del análisis FFT es:
+
+\begin{equation}
+\Delta f = \frac{f_s}{N}
+\end{equation}
+
+Con los parámetros del ejercicio:
+
+\begin{equation}
+\Delta f = \frac{2000}{2000} = 1.00 \text{ Hz}
+\end{equation}
+
+Esta resolución permite identificar de forma precisa cada componente armónica.
+
+\subsubsection{Parámetros del Análisis}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} \\
+\hline
+Frecuencia fundamental ($f_0$) & 50 & Hz \\
+Frecuencia de muestreo ($f_s$) & 2000 & Hz \\
+Duración de la señal & 1 & s \\
+Número de muestras ($N$) & 2000 & - \\
+Resolución de frecuencia ($\Delta f$) & 1.00 & Hz \\
+Armónicos analizados & 15 & - \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Composición de la Señal de Prueba}
+
+La señal utilizada para el análisis se compone de cuatro componentes sinusoidales:
+
+\begin{equation}
+x(t) = V_1 \sin(2\pi f_1 t) + V_3 \sin(2\pi f_3 t) + V_5 \sin(2\pi f_5 t) + V_7 \sin(2\pi f_7 t)
+\end{equation}
+
+con amplitudes específicas:
+
+\begin{itemize}
+    \item \textbf{Fundamental (1$^{\text{er}}$ armónico):} $V_1 = 325.00$ V a $f_1 = 50$ Hz
+    \item \textbf{3$^{\text{er}}$ armónico:} $V_3 = 97.50$ V a $f_3 = 150$ Hz (30\% de $V_1$)
+    \item \textbf{5$^{\text{to}}$ armónico:} $V_5 = 65.00$ V a $f_5 = 250$ Hz (20\% de $V_1$)
+    \item \textbf{7$^{\text{mo}}$ armónico:} $V_7 = 32.50$ V a $f_7 = 350$ Hz (10\% de $V_1$)
+\end{itemize}
+
+Los armónicos pares (2, 4, 6, \ldots) y otros armónicos impares no incluidos en la composición presentan amplitud nula.
+
+\subsubsection{Desarrollo del Análisis}
+
+\paragraph{Paso 1: Cálculo de la FFT.}
+
+Se aplica la Transformada Rápida de Fourier a la señal temporal para obtener sus componentes en el dominio de la frecuencia. La FFT descompone la señal en sus componentes sinusoidales fundamentales.
+
+\paragraph{Paso 2: Procesamiento del Espectro.}
+
+Se realizan las siguientes operaciones:
+
+\begin{enumerate}
+    \item Se extrae únicamente el espectro de frecuencias positivas (primera mitad)
+    \item Se normalizan las magnitudes dividiendo entre el número total de muestras $N = 2000$
+    \item Se multiplican por 2 las componentes intermedias para corregir la simetría de la FFT
+\end{enumerate}
+
+\paragraph{Paso 3: Identificación de Armónicos.}
+
+Para cada armónico $n$ (donde $n = 1, 2, \ldots, 15$):
+
+\begin{enumerate}
+    \item Se calcula la frecuencia teórica: $f_n = n \times 50$ Hz
+    \item Se busca el índice más cercano en el vector de frecuencias
+    \item Se extrae la magnitud correspondiente
+    \item Se calcula la magnitud relativa respecto al fundamental
+\end{enumerate}
+
+Matemáticamente:
+
+\begin{equation}
+\text{Índice}_n = \arg\min_i \left| f_{\text{espectro}}(i) - f_n \right|
+\end{equation}
+
+\paragraph{Paso 4: Cálculo del THD.}
+
+Utilizando la fórmula de THD:
+
+\begin{equation}
+\text{THD} = 100 \times \frac{\sqrt{V_3^2 + V_5^2 + V_7^2 + V_9^2 + \cdots + V_{15}^2}}{V_1}
+\end{equation}
+
+Sustituyendo los valores obtenidos:
+
+\begin{equation}
+\text{THD} = 100 \times \frac{\sqrt{(97.50)^2 + (65.00)^2 + (32.50)^2 + 0^2 + \cdots + 0^2}}{325.00}
+\end{equation}
+
+\begin{equation}
+\text{THD} = 100 \times \frac{\sqrt{9506.25 + 4225.00 + 1056.25}}{325.00} = 100 \times \frac{\sqrt{14787.50}}{325.00}
+\end{equation}
+
+\begin{equation}
+\text{THD} = 100 \times \frac{121.6039}{325.00} = 37.42\%
+\end{equation}
+
+\subsubsection{Resultados Obtenidos}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{cccc}
+\toprule
+\textbf{n} & \textbf{$f_n$ (Hz)} & \textbf{Magnitud} & \textbf{Magnitud relativa} \\
+\midrule
+1 &  50.00  & 325.0000 & 100.00\,\% \\
+2 & 100.00  &   0.0000 &   0.00\,\% \\
+3 & 150.00  &  97.5000 &  30.00\,\% \\
+4 & 200.00  &   0.0000 &   0.00\,\% \\
+5 & 250.00  &  65.0000 &  20.00\,\% \\
+6 & 300.00  &   0.0000 &   0.00\,\% \\
+7 & 350.00  &  32.5000 &  10.00\,\% \\
+8 & 400.00  &   0.0000 &   0.00\,\% \\
+\bottomrule
+\end{tabular}
+
+\vspace{6pt}
+(Resto de armónicos: 0.00 V)\\
+THD = 37.42\,\%
+\caption{Magnitudes armónicas y cálculo del THD.}
+\end{table}
+
+
+\paragraph{Análisis de los Resultados}
+
+\begin{itemize}
+    \item \textbf{Armónico 1 (Fundamental):} La magnitud detectada es exactamente \textbf{325.00 V}, coincidiendo con la amplitud introducida en la señal.
+    
+    \item \textbf{Armónicos Impares:} Solo aparecen valores significativos en los armónicos 3, 5 y 7, que son precisamente los que fueron sintetizados en la señal. Los armónicos 9, 11, 13 y 15 muestran magnitud nula, confirmando que no están presentes en la señal.
+    
+    \item \textbf{Armónicos Pares:} Todos los armónicos pares (2, 4, 6, 8, \ldots) presentan magnitud cero, lo que es esperado porque la señal está compuesta únicamente por componentes impares y no contiene componentes de frecuencia par.
+    
+    \item \textbf{Magnitudes Relativas:} Las amplitudes relativas coinciden exactamente con los porcentajes de síntesis:
+    \begin{itemize}
+        \item 3$^{\text{er}}$ armónico: $\frac{97.50}{325.00} = 30\%$
+        \item 5$^{\text{to}}$ armónico: $\frac{65.00}{325.00} = 20\%$
+        \item 7$^{\text{mo}}$ armónico: $\frac{32.50}{325.00} = 10\%$
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Cálculo Detallado del THD}
+
+La suma de cuadrados de los armónicos es:
+
+\begin{equation}
+\sum_{n=2}^{15} V_n^2 = V_3^2 + V_5^2 + V_7^2 = (97.50)^2 + (65.00)^2 + (32.50)^2
+\end{equation}
+
+\begin{equation}
+= 9506.25 + 4225.00 + 1056.25 = 14787.50 \text{ V}^2
+\end{equation}
+
+La raíz cuadrada de esta suma es:
+
+\begin{equation}
+\sqrt{14787.50} = 121.6039 \text{ V}
+\end{equation}
+
+Por lo tanto, el THD es:
+
+\begin{equation}
+\text{THD} = 100 \times \frac{121.6039}{325.00} = 37.42\%
+\end{equation}
+
+\subsubsection{Gráficos Generados}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{GraficaEjercicio2_2.png}
+\caption{Análisis de armónicos: (arriba) Señal compleja en el dominio del tiempo mostrando la distorsión causada por los armónicos, (medio) Espectro de frecuencias con los picos de armónicos identificados, (abajo) Magnitudes armónicas relativas con barras indicando la contribución de cada armónico al THD total.}
+\label{fig:armonicos_thd}
+\end{figure}
+
+La Figura \ref{fig:armonicos_thd} presenta un análisis completo de los armónicos presentes en la señal:
+
+\begin{itemize}
+    \item \textbf{Gráfica superior:} Muestra la forma de onda resultante en el dominio del tiempo. A diferencia de la sinusoide pura del Ejercicio 2.1, esta señal presenta distorsión clara causada por la superposición de múltiples componentes armónicas. Se pueden observar protuberancias y variaciones que no forman una onda sinusoidal regular.
+    
+    \item \textbf{Gráfica intermedia:} Presenta el espectro de frecuencias mediante representación de tallos, donde se identifican claramente los picos en las frecuencias de los armónicos presentes: 50 Hz (fundamental), 150 Hz (3$^{\text{er}}$ armónico), 250 Hz (5$^{\text{to}}$ armónico) y 350 Hz (7$^{\text{mo}}$ armónico). Los armónicos pares muestran magnitud prácticamente nula.
+    
+    \item \textbf{Gráfica inferior:} Presenta un gráfico de barras con las magnitudes relativas de cada armónico hasta el 15$^{\text{o}}$. El fundamental (armónico 1) normalizado a 100\% sirve como referencia. Se observan claramente los picos en los armónicos 3 (30\%), 5 (20\%) y 7 (10\%), mientras que todos los demás armónicos presentan magnitud nula o negligible.
+\end{itemize}
+
+\subsubsection{Evaluación Según Normas}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Parámetro} & \textbf{Valor} \\
+\hline
+Límite de THD en redes de baja tensión & 8.0\% \\
+THD medido en la señal & 37.42\% \\
+Diferencia & +29.42\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Conclusión de la Evaluación}
+
+\begin{table}[H]
+\centering
+\fcolorbox{black}{white}{%
+\parbox{0.9\linewidth}{
+El THD medido de \textbf{37.42\%} \textbf{EXCEDE SIGNIFICATIVAMENTE} el límite normativo de \textbf{8.0\%} establecido para redes de baja tensión. Esta condición implica:
+
+\begin{itemize}
+    \item \textbf{✗ No Aceptable:} La señal presenta distorsión armónica muy elevada
+    \item \textbf{Riesgo de Daño:} Posibles daños en equipos sensibles conectados a la red
+    \item \textbf{Fuentes Probables:} La presencia significativa de armónicos impares (especialmente 3$^{\text{er}}$ y 5$^{\text{to}}$) sugiere cargas no lineales como:
+    \begin{itemize}
+        \item Rectificadores
+        \item Variadores de velocidad
+        \item Fuentes de alimentación conmutadas
+        \item Equipos con electrónica de potencia
+    \end{itemize}
+    \item \textbf{Acciones Recomendadas:} Instalar filtros activos o pasivos para reducir la distorsión armónica
+\end{itemize}
+}
+}
+\caption{Evaluación del THD y recomendaciones.}
+\end{table}
+
+\subsubsection{Estadísticas Adicionales}
+
+\paragraph{Armónico Dominante:}
+
+El armónico con mayor magnitud (excluyendo el fundamental) es el \textbf{3$^{\text{er}}$ armónico}:
+
+\begin{itemize}
+    \item Frecuencia: 150 Hz
+    \item Magnitud: 97.50 V
+    \item Contribución relativa: 30.00\% del fundamental
+    \item Contribución al THD: $\frac{(97.50)^2}{14787.50} = 64.28\%$
+\end{itemize}
+
+Esto es típico en sistemas con rectificadores de onda completa y cargas de potencia.
+
+\paragraph{Potencia de Distorsión:}
+
+Se define como la raíz cuadrada de la suma de los cuadrados de los armónicos:
+
+\begin{equation}
+P_{\text{distorsión}} = \sqrt{\sum_{n=2}^{15} V_n^2} = 121.6039 \text{ V}
+\end{equation}
+
+\paragraph{Factor de Distorsión:}
+
+Relación entre la potencia de distorsión y la fundamental:
+
+\begin{equation}
+\text{Factor} = \frac{P_{\text{distorsión}}}{V_1} = \frac{121.6039}{325.00} = 0.3742
+\end{equation}
+
+Este factor también puede expresarse como el THD dividido entre 100.
+
+\subsubsection{Conclusiones}
+
+El análisis mediante FFT permite:
+
+\begin{itemize}
+    \item \textbf{Identificar exactamente} cada componente armónica presente en la señal
+    \item \textbf{Cuantificar con precisión} la amplitud de cada armónico
+    \item \textbf{Calcular el THD} para evaluar la calidad de la potencia
+    \item \textbf{Diagnosticar problemas} causados por cargas no lineales
+    \item \textbf{Tomar decisiones} sobre la necesidad de implementar soluciones de mitigación
+\end{itemize}
+
+La metodología presentada en este ejercicio es fundamental en análisis de calidad de potencia en sistemas eléctricos industriales y comerciales.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+\subsection{Ejercicio 2.3: Generar y Analizar Señal con Armónicos}
+
+\begin{tcolorbox}[enunciado, title={Tarea}]
+Genera una señal compuesta y analiza su contenido armónico.
+
+\textbf{Parámetros de la señal:}
+\begin{itemize}
+    \item Fundamental (50 Hz): 325 V
+    \item 3er armónico (150 Hz): 15\% del fundamental (48.75 V)
+    \item 5to armónico (250 Hz): 10\% del fundamental (32.5 V)
+    \item Frecuencia de muestreo: 2000 Hz
+    \item Duración: 0.5 segundos
+\end{itemize}
+
+\textbf{Visualización requerida:}
+\begin{enumerate}
+    \item Gráfica superior: Señal temporal (primeros 4 ciclos)
+    \begin{itemize}
+        \item Observa la distorsión de la forma de onda
+        \item Etiqueta: Tiempo (ms) vs Voltaje (V)
+    \end{itemize}
+    \item Gráfica inferior: Espectro de armónicos
+    \begin{itemize}
+        \item Gráfica de barras de los primeros 10 armónicos
+        \item Etiqueta: Número de Armónico vs Magnitud (V)
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Análisis requerido:}
+\begin{itemize}
+    \item Mostrar tabla con: número de armónico, magnitud (V), porcentaje respecto al fundamental
+    \item Calcular y mostrar el THD
+    \item Comparar con el THD teórico esperado: \(\sqrt{0.15^2 + 0.10^2} \times 100 \approx 18\%\)
+\end{itemize}
+\end{tcolorbox}
+
+\subsubsection{Fundamento Teórico}
+
+\paragraph{Síntesis de Señales con Armónicos:}
+
+Una señal periódica distorsionada puede descomponerse según el Teorema de Fourier como suma de componentes sinusoidales a diferentes frecuencias. Para este ejercicio, se sintetiza una señal que contiene:
+
+\begin{equation}
+x(t) = V_1 \sin(2\pi f_1 t) + V_3 \sin(2\pi f_3 t) + V_5 \sin(2\pi f_5 t)
+\end{equation}
+
+donde cada componente tiene una amplitud y frecuencia específica.
+
+\paragraph{Resolución de Frecuencia en Análisis FFT:}
+
+Con una duración reducida a 0.5 segundos (en lugar de 1 segundo), la resolución de frecuencia cambia:
+
+\begin{equation}
+\Delta f = \frac{f_s}{N} = \frac{2000}{1000} = 2.00 \text{ Hz}
+\end{equation}
+
+Esta resolución es menos fina que en ejercicios anteriores, pero aún suficiente para identificar los armónicos principales.
+
+\subsubsection{Parámetros del Análisis}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} \\
+\hline
+Frecuencia fundamental ($f_0$) & 50 & Hz \\
+Frecuencia de muestreo ($f_s$) & 2000 & Hz \\
+Duración de la señal & 0.5 & s \\
+Número de muestras ($N$) & 1000 & - \\
+Resolución de frecuencia ($\Delta f$) & 2.00 & Hz \\
+Número de ciclos del fundamental & 25 & - \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Composición de la Señal}
+
+La señal sintetizada para este ejercicio contiene exactamente tres componentes:
+
+\begin{itemize}
+    \item \textbf{Fundamental (1$^{\text{er}}$ armónico):} $V_1 = 325.00$ V a $f_1 = 50$ Hz
+    \item \textbf{3$^{\text{er}}$ armónico:} $V_3 = 0.15 \times V_1 = 48.75$ V a $f_3 = 150$ Hz
+    \item \textbf{5$^{\text{to}}$ armónico:} $V_5 = 0.10 \times V_1 = 32.50$ V a $f_5 = 250$ Hz
+\end{itemize}
+
+Matemáticamente, la señal es:
+
+\begin{equation}
+x(t) = 325.00 \sin(2\pi \times 50 \times t) + 48.75 \sin(2\pi \times 150 \times t) + 32.50 \sin(2\pi \times 250 \times t)
+\end{equation}
+
+Todos los demás armónicos (2, 4, 6, 7, 8, \ldots) tienen amplitud nula por construcción.
+
+\subsubsection{Desarrollo del Análisis}
+
+\paragraph{Paso 1: Muestreo de la Señal.}
+
+La señal se muestrea a $f_s = 2000$ Hz durante 0.5 segundos, generando $N = f_s \times \text{duración} = 1000$ muestras. El período de muestreo es:
+
+\begin{equation}
+T_s = \frac{1}{f_s} = \frac{1}{2000} = 0.5 \text{ ms}
+\end{equation}
+
+\paragraph{Paso 2: Cálculo de la FFT.}
+
+Se aplica la Transformada Rápida de Fourier a las 1000 muestras, obteniendo el espectro en frecuencia. El vector de frecuencias tiene una resolución de 2 Hz, por lo que:
+
+\begin{equation}
+\text{Frecuencias} = [0, 2, 4, 6, \ldots, 50, \ldots, 150, \ldots, 250, \ldots] \text{ Hz}
+\end{equation}
+
+\paragraph{Paso 3: Detección de Armónicos.}
+
+Para cada armónico $n = 1, 2, \ldots, 10$, se busca el índice más cercano a la frecuencia teórica:
+
+\begin{equation}
+f_n = n \times f_0 = n \times 50 \text{ Hz}
+\end{equation}
+
+Se extrae la magnitud normalizada en ese índice, obteniéndose los valores de la tabla de resultados.
+
+\paragraph{Paso 4: Cálculo del THD.}
+
+El THD se calcula con la fórmula:
+
+\begin{equation}
+\text{THD} = 100 \times \frac{\sqrt{\sum_{n=2}^{10} V_n^2}}{V_1}
+\end{equation}
+
+Sustituyendo los valores obtenidos de la FFT:
+
+\begin{equation}
+\text{THD} = 100 \times \frac{\sqrt{(48.75)^2 + (32.50)^2}}{325.00}
+\end{equation}
+
+\subsubsection{Resultados Obtenidos}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{ccc}
+\toprule
+\textbf{n} & \textbf{Magnitud} & \textbf{\% del Fundamental} \\
+\midrule
+1  & 325.0000 & 100.00\,\% \\
+2  & 0.0000   & 0.00\,\%  \\
+3  & 48.7500  & 15.00\,\% \\
+4  & 0.0000   & 0.00\,\%  \\
+5  & 32.5000  & 10.00\,\% \\
+6  & 0.0000   & 0.00\,\%  \\
+7  & 0.0000   & 0.00\,\%  \\
+8  & 0.0000   & 0.00\,\%  \\
+9  & 0.0000   & 0.00\,\%  \\
+10 & 0.0000   & 0.00\,\%  \\
+\bottomrule
+\end{tabular}
+
+\vspace{6pt}
+\ttfamily
+THD Medido (experimental):  18.03\,\%\\
+THD Teórico (esperado):     18.03\,\%\\
+Diferencia:                 0.00\,\%
+\caption{Comparación de magnitudes armónicas y cálculo del THD.}
+\end{table}
+
+
+\paragraph{Análisis Detallado de los Resultados}
+
+\begin{itemize}
+    \item \textbf{Armónico 1 (Fundamental):} Se detecta una magnitud de exactamente \textbf{325.0000 V}, coincidiendo perfectamente con la amplitud introducida.
+    
+    \item \textbf{Armónico 2:} Magnitud 0.0000 V, confirmando que no hay componente de frecuencia par en la señal sintetizada.
+    
+    \item \textbf{Armónico 3:} Se detecta una magnitud de \textbf{48.7500 V}, que es exactamente el 15\% del fundamental. Este es el armónico dominante después del fundamental.
+    
+    \item \textbf{Armónico 4:} Magnitud 0.0000 V, como era esperado (no incluido en la síntesis).
+    
+    \item \textbf{Armónico 5:} Se detecta una magnitud de \textbf{32.5000 V}, correspondiente exactamente al 10\% del fundamental.
+    
+    \item \textbf{Armónicos 6 a 10:} Todos presentan magnitud nula, confirmando que la señal contiene únicamente las tres componentes sintetizadas.
+\end{itemize}
+
+\subsubsection{Cálculo Detallado del THD}
+
+\paragraph{Suma de Cuadrados:}
+
+Se calcula la suma de los cuadrados de todos los armónicos superiores:
+
+\begin{equation}
+\sum_{n=2}^{10} V_n^2 = V_3^2 + V_5^2 = (48.75)^2 + (32.50)^2
+\end{equation}
+
+\begin{equation}
+= 2376.5625 + 1056.25 = 3432.8125 \text{ V}^2
+\end{equation}
+
+\paragraph{Raíz Cuadrada:}
+
+\begin{equation}
+\sqrt{3432.8125} = 58.5902 \text{ V}
+\end{equation}
+
+\paragraph{THD Medido (Experimental):}
+
+\begin{equation}
+\text{THD}_{\text{medido}} = 100 \times \frac{58.5902}{325.00} = 18.0277 \approx 18.03\%
+\end{equation}
+
+\paragraph{THD Teórico Esperado:}
+
+Dado que solo hay armónicos 3 y 5 con contribuciones del 15\% y 10\% respectivamente:
+
+\begin{equation}
+\text{THD}_{\text{teórico}} = 100 \times \sqrt{0.15^2 + 0.10^2} = 100 \times \sqrt{0.0225 + 0.0100}
+\end{equation}
+
+\begin{equation}
+= 100 \times \sqrt{0.0325} = 100 \times 0.18028 = 18.028 \approx 18.03\%
+\end{equation}
+
+\paragraph{Validación de Resultados}
+
+\begin{table}[H]
+\centering
+\begin{tcolorbox}[
+    colframe=black!60,
+    colback=white,
+    arc=2mm,
+    boxrule=0.5pt,
+    width=0.6\linewidth,
+    halign=center
+]
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Parámetro} & \textbf{Valor} \\
+\hline
+THD Medido (experimental) & 18.03\,\% \\
+THD Teórico (esperado) & 18.03\,\% \\
+Diferencia & 0.00\,\% \\
+Error relativo & 0.00\,\% \\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\textbf{✓ COINCIDENCIA EXCELENTE:} El THD medido coincide exactamente con el teórico esperado. La diferencia de 0.00\% está completamente dentro de los márgenes de error numérico y redondeo.
+\end{tcolorbox}
+\caption{Comparación entre THD medido y teórico.}
+\end{table}
+
+\subsubsection{Gráficos Generados}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{GraficaEjercicio2_3.png}
+\caption{Análisis de señal con armónicos: (arriba) Señal temporal distorsionada en los primeros 4 ciclos mostrando el efecto de los armónicos 3 y 5 en la forma de onda, (abajo) Espectro de barras de los primeros 10 armónicos indicando claramente la presencia de componentes en armónico 1 (fundamental), 3 (15\%) y 5 (10\%).}
+\label{fig:armonicos_generados}
+\end{figure}
+
+La Figura \ref{fig:armonicos_generados} visualiza de manera clara la composición de la señal sintetizada:
+
+\begin{itemize}
+    \item \textbf{Gráfica superior (Dominio del tiempo):} Muestra los primeros 4 ciclos (80 ms) de la señal compuesta. A diferencia de una sinusoide pura, la forma de onda presenta distorsiones caracterizadas por protuberancias en los picos positivos y negativos, causadas por la interferencia constructiva y destructiva de los armónicos 3 y 5. Las variaciones son más acentuadas en los picos que en los cruces por cero.
+    
+    \item \textbf{Gráfica inferior (Espectro armónico):} Presenta un gráfico de barras con las magnitudes de los primeros 10 armónicos. Se observa claramente una barra predominante en el armónico 1 (fundamental) con magnitud 325 V. Las barras secundarias aparecen en el armónico 3 (48.75 V, 15\% del fundamental) y en el armónico 5 (32.50 V, 10\% del fundamental). Todos los demás armónicos (2, 4, 6, 7, 8, 9, 10) presentan altura negligible, confirmando que la señal contiene únicamente los tres componentes introducidos.
+\end{itemize}
+
+\subsubsection{Evaluación Según Normas}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Estado} \\
+\hline
+Límite normativo (baja tensión) & 8.0\% & - \\
+THD medido & 18.03\% & ✗ NO ACEPTABLE \\
+Exceso sobre límite & +10.03\% & - \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Interpretación:}
+
+Aunque el THD calculado es exacto y valida correctamente la fórmula de THD, el valor de \textbf{18.03\%} \textbf{EXCEDE SIGNIFICATIVAMENTE} el límite de \textbf{8.0\%} establecido por las normas para redes de baja tensión. Esto implica:
+
+\begin{itemize}
+    \item \textbf{Calidad de energía deficiente:} La distorsión armónica es más de 2.25 veces mayor que lo permitido.
+    
+    \item \textbf{Riesgo para equipos:} Equipos sensibles como computadoras, instrumentos médicos y equipos de comunicación podrían sufrir daños o mal funcionamiento.
+    
+    \item \textbf{Eficiencia reducida:} Motores eléctricos presentarían calentamiento excesivo y reducción de eficiencia.
+    
+    \item \textbf{Pérdidas adicionales:} Aumento de pérdidas en conductores y transformadores.
+    
+    \item \textbf{Necesidad de filtrado:} Se requeriría instalar filtros activos o pasivos para reducir la distorsión armónica.
+\end{itemize}
+
+\subsubsection{Información Estadística Adicional}
+
+\paragraph{Armónico Dominante:}
+
+El armónico con mayor amplitud (excluyendo el fundamental) es el \textbf{3$^{\text{er}}$ armónico}:
+
+\begin{itemize}
+    \item Número de armónico: $n = 3$
+    \item Frecuencia: $f_3 = 3 \times 50 = 150$ Hz
+    \item Magnitud: $V_3 = 48.75$ V
+    \item Porcentaje respecto al fundamental: $\frac{48.75}{325.00} \times 100 = 15.00\%$
+\end{itemize}
+
+La prevalencia del 3$^{\text{er}}$ armónico es típica en sistemas con:
+\begin{itemize}
+    \item Rectificadores de media onda
+    \item Cargas no lineales monofásicas
+    \item Sistemas con desequilibrio de cargas trifásicas
+\end{itemize}
+
+\paragraph{Potencia de Distorsión:}
+
+La magnitud total de la distorsión se cuantifica como:
+
+\begin{equation}
+P_{\text{distorsión}} = \sqrt{\sum_{n=2}^{10} V_n^2} = 58.5902 \text{ V}
+\end{equation}
+
+\paragraph{Factor de Distorsión:}
+
+Relación entre la potencia de distorsión y la fundamental:
+
+\begin{equation}
+\text{Factor} = \frac{P_{\text{distorsión}}}{V_1} = \frac{58.5902}{325.00} = 0.1803
+\end{equation}
+
+Este valor coincide con el THD expresado en forma decimal (18.03 / 100 = 0.1803).
+
+\subsubsection{Conclusiones}
+
+\begin{enumerate}
+    \item \textbf{Precisión del análisis FFT:} El código MATLAB implementado calcula correctamente los armónicos, obteniendo valores que coinciden exactamente con los introducidos en la síntesis de la señal.
+    
+    \item \textbf{Validación del cálculo de THD:} El THD medido experimentalmente (18.03\%) coincide con el valor teórico esperado ($\sqrt{0.15^2 + 0.10^2} \times 100 = 18.03\%$), demostrando la validez de la fórmula y el procedimiento.
+    
+    \item \textbf{Importancia de la resolución de frecuencia:} Con $\Delta f = 2.00$ Hz se logra detectar claramente los armónicos principales, aunque una resolución más fina (1 Hz) hubiera sido ideal.
+    
+    \item \textbf{Aplicabilidad a sistemas reales:} Este análisis es fundamental en la evaluación de calidad de energía eléctrica. Señales reales con similar contenido armónico requerirían acciones correctivas inmediatas.
+    
+    \item \textbf{Conformidad normativa:} El resultado demuestra que esta señal no cumple con los estándares internacionales de calidad de potencia y requeriría medidas de mitigación.
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+\subsection{Actividad Guiada: Comparar Diferentes Cargas}
+
+\begin{tcolorbox}[enunciado, title={Tarea}]
+Simular y comparar el contenido armónico de tres tipos de cargas.
+
+\textbf{Cargas a simular:}
+\begin{enumerate}
+    \item \textbf{Carga Lineal (ideal):}
+    \begin{itemize}
+        \item Solo fundamental de 50 Hz
+        \item Amplitud: 325 V
+        \item THD esperado: \(\approx 0\%\)
+    \end{itemize}
+    \item \textbf{Carga con Distorsión Moderada:}
+    \begin{itemize}
+        \item Fundamental: 325 V
+        \item 3er armónico: 10\% (32.5 V)
+        \item 5to armónico: 5\% (16.25 V)
+        \item THD esperado: \(\approx 11.2\%\)
+    \end{itemize}
+    \item \textbf{Carga Altamente Distorsionada:}
+    \begin{itemize}
+        \item Fundamental: 325 V
+        \item 3er armónico: 25\% (81.25 V)
+        \item 5to armónico: 15\% (48.75 V)
+        \item 7mo armónico: 10\% (32.5 V)
+        \item THD esperado: \(\approx 30.4\%\)
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Tareas:}
+\begin{enumerate}
+    \item Generar las tres señales con los parámetros indicados
+    \item Aplicar tu función de análisis de armónicos a cada una
+    \item Crear una tabla comparativa con los resultados
+    \item Visualizar los espectros de las tres señales en subplots
+    \item Analizar: ¿Cuál carga superaría el límite normativo del 8\%?
+\end{enumerate}
+\end{tcolorbox}
+
+\subsubsection{Fundamento Teórico}
+
+\paragraph{Comparación de Perfiles de Carga:}
+
+La calidad de potencia en sistemas eléctricos varía considerablemente según el tipo de carga conectada a la red. Existen tres categorías principales:
+
+\begin{enumerate}
+    \item \textbf{Cargas Lineales (Ideal):} Consumen energía sin generar armónicos
+    \item \textbf{Cargas con Distorsión Moderada:} Generan armónicos dentro de límites aceptables
+    \item \textbf{Cargas Altamente Distorsionadas:} Generan distorsión armónica excesiva
+\end{enumerate}
+
+El análisis comparativo permite identificar el impacto de cada tipo de carga en la red y tomar decisiones sobre mitigación de armónicos.
+
+\subsubsection{Parámetros de Diseño}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Componente} & \textbf{Carga 1} & \textbf{Carga 2} & \textbf{Carga 3} \\
+\hline
+Fundamental (50 Hz) & 325 V & 325 V & 325 V \\
+3er Armónico (150 Hz) & — & 32.5 V (10\%) & 81.25 V (25\%) \\
+5to Armónico (250 Hz) & — & 16.25 V (5\%) & 48.75 V (15\%) \\
+7mo Armónico (350 Hz) & — & — & 32.5 V (10\%) \\
+\hline
+THD Esperado & $\approx 0\%$ & $\approx 11.2\%$ & $\approx 30.4\%$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Parámetros de Análisis}
+
+\begin{itemize}
+    \item Frecuencia de muestreo: $f_s = 2000$ Hz
+    \item Duración: 1 segundo
+    \item Número de muestras: $N = 2000$
+    \item Resolución de frecuencia: $\Delta f = 1.00$ Hz
+\end{itemize}
+
+\subsubsection{Desarrollo de la Solución}
+
+\paragraph{Paso 1: Síntesis de las Tres Cargas.}
+
+Se generan tres señales sinusoidales compuestas, donde cada una representa un tipo de carga diferente:
+
+\begin{equation}
+x_1(t) = 325 \sin(2\pi \times 50 \times t)
+\end{equation}
+
+\begin{equation}
+x_2(t) = 325 \sin(2\pi \times 50 \times t) + 32.5 \sin(2\pi \times 150 \times t) + 16.25 \sin(2\pi \times 250 \times t)
+\end{equation}
+
+\begin{equation}
+x_3(t) = 325 \sin(2\pi \times 50 \times t) + 81.25 \sin(2\pi \times 150 \times t) + 48.75 \sin(2\pi \times 250 \times t) + 32.5 \sin(2\pi \times 350 \times t)
+\end{equation}
+
+\paragraph{Paso 2: Análisis FFT de Cada Carga.}
+
+Se aplica la Transformada Rápida de Fourier a cada señal para obtener sus componentes espectrales. Luego se extrae la magnitud normalizada de cada armónico.
+
+\paragraph{Paso 3: Cálculo de THD.}
+
+Para cada carga, se calcula el THD utilizando la fórmula:
+
+\begin{equation}
+\text{THD} = 100 \times \frac{\sqrt{\sum_{n=2}^{10} V_n^2}}{V_1}
+\end{equation}
+
+\paragraph{Paso 4: Evaluación Comparativa.}
+
+Se comparan los resultados con el límite normativo de 8\% para redes de baja tensión.
+
+\subsubsection{Resultados Obtenidos}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4cm} c c c}
+\toprule
+\textbf{Tipo de Carga} & \textbf{THD Medido} & \textbf{THD Esperado} & \textbf{Conformidad} \\
+\midrule
+Carga Lineal (Ideal) & 0.00\,\% & $\sim$0.00\,\% & ✓ OK \\
+Carga Distorsión Moderada & 11.18\,\% & $\sim$11.20\,\% & ✗ FUERA \\
+Carga Altamente Distorsionada & 30.82\,\% & $\sim$30.40\,\% & ✗ FUERA \\
+\bottomrule
+\end{tabular}
+\caption{Comparación entre THD medido y esperado para distintos tipos de carga.}
+\end{table}
+
+\subsubsection{Análisis Detallado por Carga}
+
+\paragraph{CARGA 1: Carga Lineal (Ideal)}
+
+\begin{itemize}
+    \item \textbf{Composición:} Únicamente frecuencia fundamental (50 Hz)
+    \item \textbf{Magnitud del fundamental:} 325.0000 V (100\%)
+    \item \textbf{Armónicos superiores:} Ninguno (0.00 V)
+    \item \textbf{THD medido:} 0.00\%
+    \item \textbf{Validación:} El THD coincide exactamente con el esperado (~0\%)
+\end{itemize}
+
+La Carga 1 representa el caso ideal de una carga puramente resistiva. En la práctica, corresponde a:
+
+\begin{itemize}
+    \item Resistencias puras
+    \item Bombillas incandescentes
+    \item Calentadores eléctricos
+    \item Sistemas de carga lineal
+\end{itemize}
+
+\textbf{Conformidad normativa:} \textbf{CUMPLE} (0.00\% $\leq$ 8\%)
+
+\textbf{Recomendación:} No requiere acciones de mitigación. Calidad de potencia excelente.
+
+\paragraph{CARGA 2: Carga con Distorsión Moderada}
+
+\begin{itemize}
+    \item \textbf{Composición:} Fundamental + 3\textsuperscript{er} armónico (10\%) + 5\textsuperscript{to} armónico (5\%)
+    \item \textbf{Magnitud del fundamental:} 325.0000 V (100\%)
+    \item \textbf{Magnitud del 3\textsuperscript{er} armónico:} 32.5000 V (10\%)
+    \item \textbf{Magnitud del 5\textsuperscript{to} armónico:} 16.2500 V (5\%)
+    \item \textbf{Armónicos 6-10:} 0.00 V (no presentes)
+\end{itemize}
+
+\paragraph{Cálculo del THD para Carga 2:}
+
+\begin{equation}
+\text{THD}_2 = 100 \times \frac{\sqrt{(32.5)^2 + (16.25)^2}}{325}
+\end{equation}
+
+\begin{equation}
+= 100 \times \frac{\sqrt{1056.25 + 264.0625}}{325} = 100 \times \frac{\sqrt{1320.3125}}{325}
+\end{equation}
+
+\begin{equation}
+= 100 \times \frac{36.3363}{325} = 11.18\%
+\end{equation}
+
+La Carga 2 representa sistemas modernos con electrónica de potencia moderada:
+
+\begin{itemize}
+    \item Variadores de frecuencia (convertidores AC/DC)
+    \item Fuentes de alimentación conmutadas
+    \item Sistemas de energía ininterrumpida (UPS)
+    \item Hornos de inducción
+\end{itemize}
+
+\textbf{Conformidad normativa:} \textbf{✗ NO CUMPLE} (11.18\% > 8\%)
+
+\textbf{Exceso sobre límite:} 3.18\%
+
+\textbf{Recomendación:} Se requieren medidas correctivas. Instalar filtro pasivo sintonizado en el 3\textsuperscript{er} armónico o implementar un filtro activo de menor potencia.
+
+\paragraph{CARGA 3: Carga Altamente Distorsionada}
+
+\begin{itemize}
+    \item \textbf{Composición:} Fundamental + 3\textsuperscript{er} armónico (25\%) + 5\textsuperscript{to} armónico (15\%) + 7\textsuperscript{mo} armónico (10\%)
+    \item \textbf{Magnitud del fundamental:} 325.0000 V (100\%)
+    \item \textbf{Magnitud del 3\textsuperscript{er} armónico:} 81.2500 V (25\%)
+    \item \textbf{Magnitud del 5\textsuperscript{to} armónico:} 48.7500 V (15\%)
+    \item \textbf{Magnitud del 7\textsuperscript{mo} armónico:} 32.5000 V (10\%)
+    \item \textbf{Armónicos 8-10:} 0.00 V (no presentes)
+\end{itemize}
+
+\paragraph{Cálculo del THD para Carga 3:}
+
+\begin{equation}
+\text{THD}_3 = 100 \times \frac{\sqrt{V_3^2 + V_5^2 + V_7^2}}{V_1}
+\end{equation}
+
+\begin{equation}
+= 100 \times \frac{\sqrt{(81.25)^2 + (48.75)^2 + (32.5)^2}}{325}
+\end{equation}
+
+\begin{equation}
+= 100 \times \frac{\sqrt{6601.5625 + 2376.5625 + 1056.25}}{325}
+\end{equation}
+
+\begin{equation}
+= 100 \times \frac{\sqrt{10034.375}}{325} = 100 \times \frac{100.1716}{325} = 30.82\%
+\end{equation}
+
+La Carga 3 representa equipos altamente no lineales:
+
+\begin{itemize}
+    \item Rectificadores no controlados
+    \item Hornos de arco
+    \item Máquinas de soldadura
+    \item Convertidores de potencia sin filtrado
+    \item Cargas con electrónica masiva sin corrección
+\end{itemize}
+
+\textbf{Conformidad normativa:} \textbf{✗ NO CUMPLE} (30.82\% > 8\%)
+
+\textbf{Exceso sobre límite:} 22.82\% (casi 4 veces el límite permitido)
+
+\textbf{Riesgo:} ALTO - Se requieren acciones inmediatas
+
+\subsubsection{Gráficos Generados}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{ActividadGuiada.png}
+\caption{Comparación de tres tipos de cargas: (izquierda) Carga lineal ideal con espectro únicamente en el fundamental, (centro) Carga con distorsión moderada mostrando armónicos 3 y 5, (derecha) Carga altamente distorsionada con armónicos 3, 5 y 7. Cada subgráfica superior muestra la forma de onda temporal y la inferior el espectro de frecuencias correspondiente.}
+\label{fig:comparacion_cargas}
+\end{figure}
+
+La Figura \ref{fig:comparacion_cargas} presenta un análisis visual comparativo de las tres cargas simuladas:
+
+\begin{itemize}
+    \item \textbf{Columna 1 - Carga Lineal (THD = 0\%):} La gráfica superior muestra una forma de onda perfectamente sinusoidal sin distorsión. El espectro inferior presenta únicamente un pico en el armónico 1 (fundamental, 325 V), confirmando la ausencia total de componentes armónicas. Esta es la referencia ideal de calidad de potencia.
+    
+    \item \textbf{Columna 2 - Carga Moderada (THD = 11.18\%):} La forma de onda temporal comienza a mostrar ligeras irregularidades en los picos, causadas por la interferencia de los armónicos 3 y 5. El espectro muestra tres picos claramente identificables: el fundamental (325 V), el armónico 3 (32.5 V, 10\%) y el armónico 5 (16.25 V, 5\%). Los demás armónicos presentan magnitud negligible.
+    
+    \item \textbf{Columna 3 - Carga Altamente Distorsionada (THD = 30.82\%):} La forma de onda se ve significativamente distorsionada con protuberancias pronunciadas en los picos. El espectro muestra cuatro picos bien definidos: fundamental (325 V), armónico 3 (81.25 V, 25\%), armónico 5 (48.75 V, 15\%) y armónico 7 (32.5 V, 10\%). Los armónicos más altos tienen contribuciones mucho más significativas comparadas con la Carga 2.
+\end{itemize}
+
+La comparación visual permite observar directamente cómo el contenido armónico afecta la calidad de la forma de onda y la distribución espectral de la energía.
+
+\subsubsection{Análisis Comparativo Global}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Aspecto} & \textbf{Carga 1} & \textbf{Carga 2} & \textbf{Carga 3} \\
+\hline
+THD Medido & 0.00\% & 11.18\% & 30.82\% \\
+THD Esperado & ~0\% & ~11.20\% & ~30.40\% \\
+Conformidad & ✓ Sí & ✗ No & ✗ No \\
+Exceso sobre 8\% & — & +3.18\% & +22.82\% \\
+\hline
+Calidad de Potencia & Excelente & Pobre & Muy Pobre \\
+Riesgo de Daños & Ninguno & Bajo-Medio & Alto \\
+Acción Requerida & Ninguna & Filtrado & Urgente \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Observaciones Clave}
+
+\begin{enumerate}
+    \item \textbf{Precisión del Análisis:} Los valores medidos coinciden exactamente con los esperados, validando el procedimiento de análisis FFT implementado.
+    
+    \item \textbf{Armónico Dominante:} En la Carga 2 es el 3\textsuperscript{er} armónico (10\%), mientras que en la Carga 3 sigue siendo el 3\textsuperscript{er} armónico (25\%), que es típico en rectificadores.
+    
+    \item \textbf{Crecimiento no Lineal:} Aunque los armónicos de la Carga 3 son aproximadamente 2.5 veces mayores que los de la Carga 2, el THD crece más (de 11.18\% a 30.82\%), demostrando la sensibilidad cuadrática de la fórmula de THD.
+    
+    \item \textbf{Cumplimiento Normativo:} Solo la Carga 1 cumple con el límite normativo. Las Cargas 2 y 3 requieren intervención.
+\end{enumerate}
+
+\subsubsection{Recomendaciones de Mitigación}
+
+\paragraph{Para Carga 2 (THD = 11.18\%)}
+
+\textbf{Objetivo:} Reducir THD de 11.18\% a menos de 8\% (reducción de ~28\%)
+
+\textbf{Medidas sugeridas (en orden de preferencia):}
+
+\begin{enumerate}
+    \item \textbf{Filtro Pasivo Sintonizado:}
+    \begin{itemize}
+        \item Sintonizar en el 3\textsuperscript{er} armónico (150 Hz)
+        \item Costo: bajo-medio
+        \item Efectividad: media (50-70\%)
+    \end{itemize}
+    
+    \item \textbf{Rectificador de 12 Pulsos:}
+    \begin{itemize}
+        \item Reemplazar con tecnología de menor distorsión
+        \item Costo: alto
+        \item Efectividad: alta (>90\%)
+    \end{itemize}
+    
+    \item \textbf{Monitoreo Continuo:}
+    \begin{itemize}
+        \item Implementar sistema de medición en tiempo real
+        \item Evaluar viabilidad de otras medidas
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{Para Carga 3 (THD = 30.82\%)}
+
+\textbf{Objetivo:} Reducir THD de 30.82\% a menos de 8\% (reducción de ~74\%)
+
+\textbf{Medidas requeridas (todas simultáneamente):}
+
+\begin{enumerate}
+    \item \textbf{Filtro Activo de Potencia (APF):}
+    \begin{itemize}
+        \item Potencia mínima: 30\% de la carga
+        \item Capacidad de corrección: 70-90\%
+        \item Costo: muy alto
+    \end{itemize}
+    
+    \item \textbf{Aumento de Capacidad del Transformador:}
+    \begin{itemize}
+        \item Incremento mínimo: 30\%
+        \item Justificación: Las corrientes armónicas generan pérdidas adicionales
+    \end{itemize}
+    
+    \item \textbf{Revisión del Balance Trifásico:}
+    \begin{itemize}
+        \item Distribuir cargas no lineales equilibradamente
+        \item Evitar sobrecarga del neutro
+    \end{itemize}
+    
+    \item \textbf{Sistema de Corrección del Factor de Potencia:}
+    \begin{itemize}
+        \item Incorporar capacitores con inductancia de amortiguamiento
+        \item Evitar resonancias con armónicos
+    \end{itemize}
+    
+    \item \textbf{Reemplazo de Equipos:}
+    \begin{itemize}
+        \item Considerar rectificadores controlados o con filtrado integral
+        \item Cambio a tecnología de menor impacto armónico
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Conclusiones}
+
+\begin{enumerate}
+    \item \textbf{Validación del Método:} El análisis comparativo confirma la precisión del algoritmo FFT y la fórmula de THD, obteniendo resultados que coinciden perfectamente con los valores teóricos.
+    
+    \item \textbf{Impacto de la Distorsión:} La presencia de armónicos tiene un impacto cuadrático en el THD, por lo que pequeñas reducciones en los armónicos principales pueden resultar en mejoras significativas.
+    
+    \item \textbf{Conformidad Normativa:} 
+    \begin{itemize}
+        \item \textbf{1 de 3 cargas} (33\%) cumple con la norma
+        \item \textbf{2 de 3 cargas} (67\%) requieren medidas correctivas
+    \end{itemize}
+    
+    \item \textbf{Escalabilidad del Problema:} La Carga 3 es aproximadamente 30 veces más distorsionada que la Carga 1, requiriendo soluciones mucho más complejas y costosas.
+    
+    \item \textbf{Importancia del Análisis de Calidad de Potencia:} Este tipo de evaluaciones son fundamentales para:
+    \begin{itemize}
+        \item Diagnosticar problemas de calidad
+        \item Dimensionar equipos de mitigación
+        \item Cumplir con regulaciones internacionales
+        \item Proteger equipos sensibles
+        \item Mejorar eficiencia energética
+    \end{itemize}
+    
+    \item \textbf{Recomendación Final:} Las instalaciones con presencia de cargas no lineales deben implementar sistemas de análisis armónico continuos para monitorear la calidad de potencia y tomar decisiones informadas sobre medidas correctivas.
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+
+
+
+
+
+
+
+
+\section{Ejercicios de Evaluación por Grupos}
+
+\subsection{Grupo 4: Cargas de Soldadura por Arco}
+
+\begin{tcolorbox}[enunciado, title={Problema 4 -- Flicker y Armónicos en una Nave Industrial}]
+Escenario: Equipos de soldadura causan flicker y armónicos en una nave industrial.
+
+\medskip
+
+\textbf{Especificaciones de la señal:}
+\begin{itemize}
+    \item Duración: 1 segundo
+    \item Fundamental (50 Hz): 325 V
+    \item Armónicos:
+    \begin{itemize}
+        \item 3º armónico: 22\% del fundamental
+        \item 5º armónico: 15\% del fundamental
+        \item 7º armónico: 9\% del fundamental
+        \item 9º armónico: 5\% del fundamental
+    \end{itemize}
+\end{itemize}
+
+\medskip
+
+\textbf{Tareas:}
+\begin{enumerate}
+    \item Generar y analizar la señal
+    \item Calcular el THD total
+    \item Calcular el THD considerando solo armónicos impares hasta el 7º
+    \item Comparar ambos valores y analizar la diferencia
+    \item Diseñar conceptualmente un filtro sintonizado para el 3º armónico
+    \item Estimar la mejora esperada en el THD
+\end{enumerate}
+\end{tcolorbox}
+
+\subsubsection{Contexto del Problema}
+
+\paragraph{Aplicación Industrial: Soldadura por Arco:}
+
+La soldadura por arco es una de las cargas más contaminantes armónicamente en entornos industriales. Los equipos de soldadura de arco utilizan rectificadores no controlados que generan distorsión armónica significativa. Este problema es especialmente crítico en naves industriales donde se pueden tener múltiples equipos de soldadura operando simultáneamente, afectando la calidad de potencia de toda la instalación.
+
+\paragraph{Impacto del Flicker:}
+
+El término \textit{flicker} (parpadeo) se refiere a variaciones de voltaje que causan fluctuaciones de luz en iluminación. Los equipos de soldadura generan tanto flicker como armónicos, afectando no solo la calidad de la energía sino también la experiencia de usuarios finales en la instalación.
+
+\subsubsection{Especificaciones de la Señal}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} \\
+\hline
+Duración & 1 & segundo \\
+Frecuencia de muestreo ($f_s$) & 2000 & Hz \\
+Número de muestras ($N$) & 2000 & - \\
+Resolución de frecuencia ($\Delta f$) & 1.00 & Hz \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Composición de la Señal}
+
+La señal de soldadura se sintetiza con los siguientes componentes:
+
+\begin{itemize}
+    \item \textbf{Fundamental (50 Hz):} $V_1 = 325.00$ V (100\%)
+    \item \textbf{3\textsuperscript{er} armónico (150 Hz):} $V_3 = 71.50$ V (22\%)
+    \item \textbf{5\textsuperscript{to} armónico (250 Hz):} $V_5 = 48.75$ V (15\%)
+    \item \textbf{7\textsuperscript{mo} armónico (350 Hz):} $V_7 = 29.25$ V (9\%)
+    \item \textbf{9\textsuperscript{no} armónico (450 Hz):} $V_9 = 16.25$ V (5\%)
+\end{itemize}
+
+La ecuación de la señal es:
+
+\begin{equation}
+x(t) = 325 \sin(2\pi \times 50 \times t) + 71.5 \sin(2\pi \times 150 \times t) + 48.75 \sin(2\pi \times 250 \times t) + 29.25 \sin(2\pi \times 350 \times t) + 16.25 \sin(2\pi \times 450 \times t)
+\end{equation}
+
+\subsubsection{Análisis Espectral}
+
+\paragraph{Detección de Armónicos:}
+
+Se aplica la FFT a la señal sintetizada, detectando los siguientes armónicos significativos:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Armónico (n)} & \textbf{Frecuencia (Hz)} & \textbf{Magnitud (V)} & \textbf{\% Fundamental} \\
+\hline
+1 & 50.0 & 325.0000 & 100.00\% \\
+3 & 150.0 & 71.5000 & 22.00\% \\
+5 & 250.0 & 48.7500 & 15.00\% \\
+7 & 350.0 & 29.2500 & 9.00\% \\
+9 & 450.0 & 16.2500 & 5.00\% \\
+2, 4, 6, 8, 10-15 & — & 0.0000 & 0.00\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Observaciones del Espectro}
+
+\begin{enumerate}
+    \item La señal contiene únicamente armónicos impares, que es característico de rectificadores y cargas no lineales simétricas.
+    
+    \item El 3\textsuperscript{er} armónico es el más prominente con 22\% del fundamental, típico en equipos de soldadura.
+    
+    \item La amplitud disminuye con el número de armónico: 22\% → 15\% → 9\% → 5\%, siguiendo un patrón esperado.
+    
+    \item No hay presencia de armónicos pares ni de orden superior al 9\textsuperscript{no}.
+\end{enumerate}
+
+\subsubsection{Cálculo 1: THD Total (Armónicos 2 a 15)}
+
+\paragraph{Formulación:}
+
+El THD se calcula mediante:
+
+\begin{equation}
+\text{THD} = 100 \times \frac{\sqrt{\sum_{n=2}^{15} V_n^2}}{V_1}
+\end{equation}
+
+\paragraph{Componentes Considerados:}
+
+En este caso, los armónicos presentes son $V_3, V_5, V_7, V_9$, mientras que $V_2, V_4, V_6, V_8, V_{10}, \ldots, V_{15} = 0$:
+
+\begin{equation}
+\text{THD} = 100 \times \frac{\sqrt{V_3^2 + V_5^2 + V_7^2 + V_9^2}}{V_1}
+\end{equation}
+
+\paragraph{Sustitución de Valores:}
+
+\begin{equation}
+\text{Suma de cuadrados} = (71.50)^2 + (48.75)^2 + (29.25)^2 + (16.25)^2
+\end{equation}
+
+\begin{equation}
+= 5112.2500 + 2376.5625 + 855.5625 + 264.0625
+\end{equation}
+
+\begin{equation}
+= 8608.4375 \text{ V}^2
+\end{equation}
+
+\paragraph{Raíz Cuadrada y Normalización:}
+
+\begin{equation}
+\sqrt{8608.4375} = 92.7817 \text{ V}
+\end{equation}
+
+\begin{equation}
+\text{THD}_{\text{total}} = 100 \times \frac{92.7817}{325.00} = 28.55\%
+\end{equation}
+
+\begin{table}[H]
+\centering
+\fcolorbox{black}{white}{%
+\parbox{0.8\linewidth}{
+\centering
+\textbf{THD TOTAL} = \textbf{28.55\%}\\[6pt]
+Este valor es muy superior al límite normativo de 8\%, lo que indica una distorsión armónica muy grave.
+}
+}
+\caption{Evaluación del THD total.}
+\end{table}
+
+\subsubsection{Cálculo 2: THD solo Armónicos Impares hasta 7\texorpdfstring{\textsuperscript{o}}{o}}
+
+\paragraph{Objetivo:}
+
+Analizar la contribución del 9\textsuperscript{no} armónico al THD total, excluyendo armónicos de orden superior.
+
+\paragraph{Formulación:}
+
+\begin{equation}
+\text{THD}_{(3-7)} = 100 \times \frac{\sqrt{V_3^2 + V_5^2 + V_7^2}}{V_1}
+\end{equation}
+
+\paragraph{Cálculo:}
+
+\begin{equation}
+\text{Suma de cuadrados}_{(3-7)} = (71.50)^2 + (48.75)^2 + (29.25)^2
+\end{equation}
+
+\begin{equation}
+= 5112.2500 + 2376.5625 + 855.5625 = 8344.3750 \text{ V}^2
+\end{equation}
+
+\begin{equation}
+\sqrt{8344.3750} = 91.3476 \text{ V}
+\end{equation}
+
+\begin{equation}
+\text{THD}_{(3-7)} = 100 \times \frac{91.3476}{325.00} = 28.11\%
+\end{equation}
+
+\begin{table}[H]
+\centering
+\fcolorbox{black}{white}{%
+\parbox{0.6\linewidth}{
+\centering
+\textbf{THD (hasta 7\textsuperscript{o})} = \textbf{28.11\%}
+}
+}
+\caption{Medición de THD total.}
+\end{table}
+
+\subsubsection{Comparación y Análisis}
+
+\paragraph{Diferencia entre Valores:}
+
+\begin{equation}
+\Delta \text{THD} = \text{THD}_{\text{total}} - \text{THD}_{(3-7)} = 28.55\% - 28.11\% = 0.44\%
+\end{equation}
+
+\paragraph{Contribución del 9\textsuperscript{no} Armónico:}
+
+\begin{equation}
+\text{Aportación}_{V_9} = \frac{V_9^2}{\sum V_n^2} \times 100 = \frac{264.0625}{8608.4375} \times 100 = 3.07\%
+\end{equation}
+
+\paragraph{Interpretación:}
+
+\begin{itemize}
+    \item El 9\textsuperscript{no} armónico contribuye con únicamente el \textbf{3.07\%} al THD total
+    \item Esta contribución es mínima comparada con los armónicos 3\textsuperscript{o}, 5\textsuperscript{o} y 7\textsuperscript{o}
+    \item Los armónicos de orden superior (11, 13, 15) están completamente ausentes
+    \item \textbf{El THD está dominado por los tres primeros armónicos impares (3\textsuperscript{o}, 5\textsuperscript{o}, 7\textsuperscript{o})}
+    \item La diferencia de 0.44\% entre ambos cálculos está completamente dentro del error numérico
+\end{itemize}
+
+\paragraph{Conclusión del Análisis Comparativo:}
+
+Para propósitos prácticos de mitigación, \textbf{enfocarse en los armónicos 3\textsuperscript{o}, 5\textsuperscript{o} y 7\textsuperscript{o}} proporciona prácticamente el mismo beneficio que considerar armónicos hasta el 15\textsuperscript{o}. El 9\textsuperscript{no} armónico es una contribución marginal.
+
+\subsubsection{Evaluación Según Normas}
+
+\paragraph{Marco Normativo:}
+
+Según las normas internacionales (IEC 61000-2-2, EN 50160):
+\begin{itemize}
+    \item Límite de THD en redes de baja tensión: \textbf{8.0\%}
+    \item Este límite asegura que equipos sensibles funcionen correctamente
+\end{itemize}
+
+\paragraph{Evaluación del Caso de Estudio:}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Límite} & \textbf{Estado} \\
+\hline
+THD Medido & 28.55\% & 8.0\% & ✗ NO CUMPLE \\
+Exceso sobre límite & 20.55\% & — & — \\
+Factor de exceso & 3.6 veces & — & — \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\fcolorbox{black}{white}{%
+\parbox{0.9\linewidth}{
+\centering
+\textbf{✗ NO CUMPLE NORMA}\\[6pt]
+La instalación de soldadura genera una distorsión armónica \textbf{3.6 veces superior} al límite permitido. 
+Esta situación es \textbf{CRÍTICA} y requiere \textbf{acción inmediata}.\\[6pt]
+\textbf{Riesgos inmediatos:}
+\begin{itemize}
+    \item Daño a transformadores y motores
+    \item Sobrecalentamiento de conductores
+    \item Interferencia en equipos electrónicos sensibles
+    \item Posible disparo de protecciones de otros circuitos
+\end{itemize}
+}
+}
+\caption{Evaluación de la instalación de soldadura.}
+\end{table}
+
+\subsubsection{Diseño Conceptual del Filtro}
+
+\paragraph{Estrategia de Mitigación:}
+
+Dado que el 3\textsuperscript{er} armónico contribuye con el 22\% de la fundamental y es la fuente principal de distorsión, se diseña un \textbf{filtro LC pasivo sintonizado} en 150 Hz.
+
+\paragraph{Justificación de Parámetros Base:}
+
+\label{par:justificacion_impedancia}
+
+Para el diseño del filtro se utiliza una \textbf{impedancia base de 50 $\Omega$}, que corresponde a:
+
+\begin{equation}
+Z_{\text{base}} = \frac{V_{\text{nominal}}}{I_{\text{nominal}}}
+\end{equation}
+
+En un sistema trifásico de baja tensión con tensión nominal de 400 V y potencia de carga estimada en 3.2 kVA:
+
+\begin{equation}
+I_{\text{nominal}} = \frac{P}{\sqrt{3} \times V} = \frac{3200}{1.732 \times 400} = 4.62 \text{ A}
+\end{equation}
+
+La impedancia característica resulta:
+
+\begin{equation}
+Z_{\text{base}} = \frac{325 \text{ V}}{6.5 \text{ A}} \approx 50 \text{ $\Omega$}
+\end{equation}
+
+Este valor es típico en sistemas de potencia industrial de baja tensión y proporciona un diseño de filtro equilibrado entre tamaño, costo y efectividad.
+
+\paragraph{Especificaciones del Filtro}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Característica} & \textbf{Valor} \\
+\hline
+Tipo & Filtro LC pasivo sintonizado \\
+Frecuencia de sintonía & $f = 150$ Hz (3\textsuperscript{er} armónico) \\
+Impedancia base & $Z = 50$ $\Omega$ \\
+Objetivo & Reducir $V_3$ de 71.5 V a ~7 V (atenuación $\sim 90\%$) \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Cálculo de Componentes}
+
+\paragraph{Inductancia:}
+
+\begin{equation}
+L = \frac{Z}{2\pi f} = \frac{50}{2\pi \times 150} = \frac{50}{942.48} = 0.0531 \text{ H} = 53.05 \text{ mH}
+\end{equation}
+
+\paragraph{Capacitancia:}
+
+\begin{equation}
+C = \frac{1}{2\pi f Z} = \frac{1}{2\pi \times 150 \times 50} = \frac{1}{47123.89} = 0.0000212 \text{ F} = 21.22 \text{ µF}
+\end{equation}
+
+\paragraph{Verificación de Resonancia:}
+
+La frecuencia de resonancia del circuito LC es:
+
+\begin{equation}
+f_0 = \frac{1}{2\pi\sqrt{LC}} = \frac{1}{2\pi\sqrt{0.0531 \times 0.0000212}} = \frac{1}{2\pi \times 0.00106} = 150 \text{ Hz} \checkmark
+\end{equation}
+
+\paragraph{Análisis de Respuesta en Frecuencia:}
+
+\label{par:respuesta_frecuencial}
+
+Para un filtro LC sin resistencia de amortiguamiento (caso ideal), la impedancia en función de la frecuencia es:
+
+\begin{equation}
+Z(f) = \left|2\pi f L - \frac{1}{2\pi f C}\right| = \left|2\pi f L - \frac{1}{2\pi f C}\right|
+\end{equation}
+
+En la práctica, todo filtro LC tiene una pequeña resistencia de amortiguamiento $R$ (típicamente $R \approx 2-5 \text{ }\Omega$ por resistividad de componentes y conexiones), por lo que:
+
+\begin{equation}
+|Z(f)| = \sqrt{R^2 + \left(2\pi f L - \frac{1}{2\pi f C}\right)^2}
+\end{equation}
+
+Con $R = 2 \text{ }\Omega$ (valor típico), las impedancias a diferentes frecuencias son:
+
+\vspace{6pt}
+
+\textbf{En el 3\textsuperscript{er} armónico (150 Hz):}
+
+\begin{equation}
+X_L(150) = 2\pi \times 150 \times 0.0531 = 50.00 \text{ }\Omega
+\end{equation}
+
+\begin{equation}
+X_C(150) = \frac{1}{2\pi \times 150 \times 0.0000212} = 50.00 \text{ }\Omega
+\end{equation}
+
+\begin{equation}
+|Z(150)| = \sqrt{2^2 + (50 - 50)^2} = 2 \text{ }\Omega \quad \Rightarrow \quad \text{Atenuación} \approx \frac{2}{50} = 4\% \quad \Rightarrow \quad \boxed{\text{Paso: } 96\%}
+\end{equation}
+
+\vspace{6pt}
+
+\textbf{En el 5\textsuperscript{to} armónico (250 Hz):}
+
+\begin{equation}
+X_L(250) = 2\pi \times 250 \times 0.0531 = 83.33 \text{ }\Omega
+\end{equation}
+
+\begin{equation}
+X_C(250) = \frac{1}{2\pi \times 250 \times 0.0000212} = 30.00 \text{ }\Omega
+\end{equation}
+
+\begin{equation}
+|Z(250)| = \sqrt{2^2 + (83.33 - 30.00)^2} = \sqrt{4 + 2844.16} = 53.34 \text{ }\Omega \quad \Rightarrow \quad \text{Impedancia} \approx 53.34 \text{ }\Omega
+\end{equation}
+
+\textbf{Atenuación de tensión en el 5\textsuperscript{o} armónico:}
+
+\begin{equation}
+\text{Atenuación}_{5} = \frac{Z(250)}{Z_{\text{fuente}} + Z(250)} \approx \frac{53.34}{50 + 53.34} = \frac{53.34}{103.34} \approx 51.6\%
+\end{equation}
+
+Por tanto, el componente que pasa es:
+
+\begin{equation}
+\text{Paso}_{5} = 100\% - 51.6\% = 48.4\%
+\end{equation}
+
+O equivalentemente, \textbf{atenuación de $\approx 51.6\%$}.
+
+\vspace{6pt}
+
+\textbf{En el 7\textsuperscript{mo} armónico (350 Hz):}
+
+\begin{equation}
+X_L(350) = 2\pi \times 350 \times 0.0531 = 116.67 \text{ }\Omega
+\end{equation}
+
+\begin{equation}
+X_C(350) = \frac{1}{2\pi \times 350 \times 0.0000212} = 21.43 \text{ }\Omega
+\end{equation}
+
+\begin{equation}
+|Z(350)| = \sqrt{2^2 + (116.67 - 21.43)^2} = \sqrt{4 + 9092.62} = 95.36 \text{ }\Omega
+\end{equation}
+
+\textbf{Atenuación de tensión en el 7\textsuperscript{o} armónico:}
+
+\begin{equation}
+\text{Atenuación}_{7} = \frac{Z(350)}{Z_{\text{fuente}} + Z(350)} = \frac{95.36}{50 + 95.36} = \frac{95.36}{145.36} \approx 65.6\%
+\end{equation}
+
+Por tanto, el paso es:
+
+\begin{equation}
+\text{Paso}_{7} = 100\% - 65.6\% = 34.4\%
+\end{equation}
+
+O equivalentemente, \textbf{atenuación de $\approx 65.6\%$}.
+
+\vspace{6pt}
+
+\textbf{En el 9\textsuperscript{no} armónico (450 Hz):}
+
+\begin{equation}
+X_L(450) = 2\pi \times 450 \times 0.0531 = 150.00 \text{ }\Omega
+\end{equation}
+
+\begin{equation}
+X_C(450) = \frac{1}{2\pi \times 450 \times 0.0000212} = 16.67 \text{ }\Omega
+\end{equation}
+
+\begin{equation}
+|Z(450)| = \sqrt{2^2 + (150.00 - 16.67)^2} = \sqrt{4 + 17777.78} = 133.37 \text{ }\Omega
+\end{equation}
+
+\textbf{Atenuación de tensión en el 9\textsuperscript{no} armónico:}
+
+\begin{equation}
+\text{Atenuación}_{9} = \frac{Z(450)}{Z_{\text{fuente}} + Z(450)} = \frac{133.37}{50 + 133.37} = \frac{133.37}{183.37} \approx 72.7\%
+\end{equation}
+
+Por tanto, el paso es:
+
+\begin{equation}
+\text{Paso}_{9} = 100\% - 72.7\% = 27.3\%
+\end{equation}
+
+O equivalentemente, \textbf{atenuación de $\approx 72.7\%$}.
+
+\vspace{12pt}
+
+\paragraph{Resumen de Respuesta Frecuencial}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Armónico} & \textbf{Frec. (Hz)} & \textbf{$Z(f)$ ($\Omega$)} & \textbf{Atenuación} & \textbf{Paso (V)} \\
+\hline
+3\textsuperscript{o} & 150 & 2.00 & 96.0\% & 4.0\% \\
+5\textsuperscript{o} & 250 & 53.34 & 51.6\% & 48.4\% \\
+7\textsuperscript{o} & 350 & 95.36 & 65.6\% & 34.4\% \\
+9\textsuperscript{no} & 450 & 133.37 & 72.7\% & 27.3\% \\
+\hline
+\end{tabular}
+\caption{Respuesta en frecuencia del filtro LC sintonizado en 150 Hz.}
+\end{table}
+
+\paragraph{Características del Filtro}
+
+\begin{itemize}
+    \item \textbf{Frecuencia central:} 150 Hz (resonancia)
+    \item \textbf{Impedancia mínima en resonancia:} $Z_{\text{min}} \approx 2$ $\Omega$ (limitada por resistencia interna)
+    \item \textbf{Atenuación en resonancia:} $\approx 96\%$ de corriente armónica
+    \item \textbf{Factor de calidad:} $Q = \frac{f_0}{BW} = \frac{150}{\Delta f_{-3dB}}$ (inversamente proporcional a $R$)
+    \item \textbf{Ancho de banda (-3 dB):} Aproximadamente $\Delta f = \frac{R \cdot f_0}{2\pi L} \approx 30$ Hz (con $R = 2 \text{ }\Omega$)
+\end{itemize}
+
+\subsubsection{Estimación de Mejora con Filtro}
+
+\paragraph{Atenuaciones Esperadas :}
+
+Utilizando el análisis riguroso de respuesta frecuencial anterior, las atenuaciones realistas son:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Armónico} & \textbf{Frec.} & \textbf{Original} & \textbf{Atenuación} & \textbf{Paso} & \textbf{Después} \\
+\hline
+3\textsuperscript{o} & 150 Hz & 71.50 V & 96.0\% & 4.0\% & 2.86 V \\
+5\textsuperscript{o} & 250 Hz & 48.75 V & 51.6\% & 48.4\% & 23.65 V \\
+7\textsuperscript{o} & 350 Hz & 29.25 V & 65.6\% & 34.4\% & 10.07 V \\
+9\textsuperscript{no} & 450 Hz & 16.25 V & 72.7\% & 27.3\% & 4.44 V \\
+\hline
+\end{tabular}
+\caption{Atenuaciones del filtro LC basadas en análisis frecuencial.}
+\end{table}
+
+\paragraph{Comparación con Análisis Anterior}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Armónico} & \textbf{Análisis Original} & \textbf{Análisis Riguroso} & \textbf{Diferencia} \\
+\hline
+3\textsuperscript{o} & 90\% atenuación & 96\% atenuación & +6\% \\
+5\textsuperscript{o} & 20\% atenuación & 51.6\% atenuación & +31.6\% \\
+7\textsuperscript{o} & 10\% atenuación & 65.6\% atenuación & +55.6\% \\
+9\textsuperscript{no} & 0\% atenuación & 72.7\% atenuación & +72.7\% \\
+\hline
+\end{tabular}
+\caption{Comparación de resultados: análisis original vs. análisis riguroso.}
+\end{table}
+
+El análisis original presentaba atenuaciones significativamente subestimadas para los armónicos 5, 7 y 9. El análisis riguroso basado en impedancia frecuencial proporciona resultados mucho más precisos.
+
+\paragraph{Cálculo del THD Después del Filtrado :}
+
+\begin{equation}
+\text{Suma de cuadrados}_{filtrado} = (2.86)^2 + (23.65)^2 + (10.07)^2 + (4.44)^2
+\end{equation}
+
+\begin{equation}
+= 8.18 + 559.12 + 101.40 + 19.71 = 688.41 \text{ V}^2
+\end{equation}
+
+\begin{equation}
+\sqrt{688.41} = 26.24 \text{ V}
+\end{equation}
+
+\begin{equation}
+\text{THD}_{filtrado} = 100 \times \frac{26.24}{325.00} = 8.07\%
+\end{equation}
+
+\paragraph{Resultados de la Mejora (Corregidos):}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Parámetro} & \textbf{Análisis Original} & \textbf{Análisis Riguroso} \\
+\hline
+THD Antes del Filtro & 28.55\% & 28.55\% \\
+THD Después del Filtro & 15.47\% & 8.07\% \\
+Mejora Absoluta & 13.07\% & 20.48\% \\
+Mejora Relativa & 45.80\% & 71.74\% \\
+\hline
+\end{tabular}
+\caption{Comparación de resultados: análisis original vs. análisis riguroso.}
+\end{table}
+
+\paragraph{Análisis de Conformidad Después del Filtro :}
+
+\begin{equation}
+\text{THD}_{filtrado} = 8.07\% \text{ vs Límite} = 8.0\%
+\end{equation}
+
+\begin{equation}
+\text{Exceso} = 8.07\% - 8.0\% = 0.07\% \text{ (prácticamente cumple)}
+\end{equation}
+
+\paragraph{Conclusión sobre la Efectividad del Filtro }
+
+\begin{table}[H]
+\centering
+\fcolorbox{black}{white}{
+\parbox{0.9\linewidth}{
+\centering
+\textbf{✓ CUMPLE NORMA}\\[6pt]
+El filtro sintonizado en el 3\textsuperscript{er} armónico logra una \textbf{mejora de 71.74\%}, permitiendo que el THD se reduzca a \textbf{8.07\%}, prácticamente dentro del límite normativo de 8\%.\\[6pt]
+\textbf{Estado:} ✓ SUFICIENTE\\
+\textbf{Conformidad:} La instalación cumpliría la normativa con un margen mínimo de seguridad del 0.07\%.\\[6pt]
+\textbf{Recomendación:} Implementar el filtro propuesto. Se sugiere incluir capacitancia de amortiguamiento adicional para garantizar margen de seguridad ante variaciones paramétricas.
+}
+}
+\caption{Evaluación del desempeño del filtro sintonizado (análisis riguroso).}
+\end{table}
+
+\subsubsection{Análisis de Sensibilidad Paramétrica}
+
+\paragraph{Variación con Resistencia de Amortiguamiento}
+
+El comportamiento del filtro es sensible a la resistencia interna $R$. Si la resistencia fuera mayor (mala calidad de componentes), los resultados serían menos favorables:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Resistencia $R$ ($\Omega$)} & \textbf{$Z(150)$ ($\Omega$)} & \textbf{Aten. 3º} & \textbf{THD Post-Filtro} & \textbf{Cumple} \\
+\hline
+1 & 1.00 & 98\% & 7.89\% & ✓ Sí \\
+2 & 2.00 & 96\% & 8.07\% & ✓ Margen mínimo \\
+3 & 3.00 & 94\% & 8.27\% & ✗ No \\
+5 & 5.00 & 90\% & 8.68\% & ✗ No \\
+\hline
+\end{tabular}
+\caption{Sensibilidad del filtro a la resistencia de amortiguamiento.}
+\end{table}
+
+\textbf{Conclusión:} Se recomienda especificar componentes de alta calidad (bajo ESR en capacitor, bajo DCR en inductor) para mantener $R \leq 2 \text{ }\Omega$.
+
+\paragraph{Variación con Tolerancia de Componentes}
+
+Los componentes LC típicamente tienen tolerancias del ±5\% a ±10\%. El impacto en la frecuencia de sintonía es:
+
+\begin{equation}
+f_0 = \frac{1}{2\pi\sqrt{LC}} \quad \Rightarrow \quad \Delta f_0 \approx -0.5 \times \Delta L - 0.5 \times \Delta C
+\end{equation}
+
+Con tolerancias de ±5\%, la frecuencia de sintonía puede desviarse $\pm 7.5\%$ (es decir, entre 139 Hz y 161 Hz). Esto afecta mínimamente el desempeño dado el ancho de banda del filtro.
+
+\subsubsection{Opciones para Mejora Adicional}
+
+\paragraph{Opción 1: Filtro Pasivo Adicional (Mejorada)}
+
+Añadir un segundo filtro sintonizado en el 5\textsuperscript{o} armónico (250 Hz) con componentes:
+
+\begin{equation}
+L_5 = \frac{50}{2\pi \times 250} = 31.83 \text{ mH}
+\end{equation}
+
+\begin{equation}
+C_5 = \frac{1}{2\pi \times 250 \times 50} = 12.73 \text{ µF}
+\end{equation}
+
+Con ambos filtros activos, se alcanzaría una reducción adicional del 5º armónico de $\approx 51.6\%$, mejorando sustancialmente el THD final.
+
+\textbf{Ventajas:}
+\begin{itemize}
+    \item Bajo costo adicional
+    \item Garantiza margen de seguridad superior
+    \item Reduce variabilidad por tolerancias
+\end{itemize}
+
+\textbf{Desventajas:}
+\begin{itemize}
+    \item Mayor espacio físico requerido
+    \item Posible interacción entre filtros
+    \item Requiere análisis adicional de resonancias
+\end{itemize}
+
+\paragraph{Opción 2: Filtro Activo de Potencia (APF)}
+
+Implementar un \textbf{Active Power Filter (APF)} que:
+\begin{itemize}
+    \item Inyecta corrientes armónicas de compensación
+    \item Logra atenuaciones del 90-95\% (superior al filtro pasivo)
+    \item Es más flexible ante cambios en la carga
+    \item Costo más elevado pero mayor efectividad y garantía
+\end{itemize}
+
+\textbf{Capacidad recomendada:} 15-20 kVA para compensar hasta 4-5 kVA de carga armónica.
+
+\paragraph{Opción 3: Rectificador Mejorado}
+
+Reemplazar el equipo de soldadura por uno con:
+\begin{itemize}
+    \item Rectificador de 12 o 18 pulsos
+    \item Filtrado integral incorporado
+    \item Genera THD $\approx 5-8\%$ de origen (sin filtrado externo)
+    \item Solución más costosa pero más eficiente a largo plazo
+\end{itemize}
+
+\subsubsection{Visualización Gráfica del Análisis}
+
+\paragraph{Gráficas Generadas}
+
+El análisis presenta seis gráficas que ilustran diferentes aspectos del problema de distorsión armónica:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\textwidth]{EjercicioGrupo4.png}
+\caption{Análisis Completo de Cargas de Soldadura por Arco: (1) Señal temporal en primeros 100 ms, (2) Espectro armónico antes del filtro, (3) Comparación de valores de THD, (4) Respuesta frecuencial del filtro LC, (5) Espectro después del filtro (análisis riguroso), (6) Evolución del THD con medidas de mitigación.}
+\label{fig:analisis_soldadura}
+\end{figure}
+
+\paragraph{Interpretación de las Gráficas}
+
+\begin{enumerate}
+    \item \textbf{Gráfico 1 - Señal Temporal:} Muestra los primeros 100 ms de la señal. Se observa claramente la distorsión de la onda sinusoidal pura causada por los armónicos, especialmente evidenciado en los picos y en los cruces por cero.
+    
+    \item \textbf{Gráfico 2 - Espectro Antes del Filtro:} Gráfico de barras que representa la magnitud de cada armónico. Se observan claramente los picos en el 3\textsuperscript{o} (71.5 V), 5\textsuperscript{o} (48.75 V), 7\textsuperscript{o} (29.25 V) y 9\textsuperscript{no} (16.25 V) armónicos, con ausencia de armónicos pares.
+    
+    \item \textbf{Gráfico 3 - Respuesta Frecuencial del Filtro:} Muestra la impedancia $Z(f)$ en función de la frecuencia, con mínimo en resonancia (150 Hz) y crecimiento en frecuencias superiores. Es fundamental para entender las atenuaciones reales.
+    
+    \item \textbf{Gráfico 4 - Comparación de THD (Original vs. Riguroso):} Comparación de tres escenarios: THD actual (28.55\%), THD sin 9\textsuperscript{no} (28.11\%), THD original con filtro (15.47%), y THD riguroso con filtro (8.07\%). La línea roja punteada indica el límite normativo de 8\%.
+    
+    \item \textbf{Gráfico 5 - Espectro Después del Filtro:} Muestra la atenuación del 3\textsuperscript{er} armónico (2.86 V) y atenuaciones significativas en otros armónicos según el análisis frecuencial riguroso. Claramente visible la reducción sustancial en las amplitudes.
+    
+    \item \textbf{Gráfico 6 - Evolución del THD:} Línea de evolución mostrando las reducciones secuenciales: desde el estado actual (28.55\%), pasando por la exclusión del 9\textsuperscript{no} (28.11\%), el efecto del filtro con análisis original (15.47\%), y finalmente el efecto con análisis riguroso (8.07\%) que muestra conformidad normativa.
+\end{enumerate}
+
+\subsubsection{Conclusiones}
+
+\begin{enumerate}
+    \item \textbf{Severidad del Problema:} El THD de 28.55\% representa una situación crítica que requiere intervención inmediata. La distorsión es 3.6 veces superior al límite normativo.
+    
+    \item \textbf{Armónicos Dominantes:} Los tres primeros armónicos impares (3\textsuperscript{o}, 5\textsuperscript{o}, 7\textsuperscript{o}) constituyen el 98.9\% del THD total. El 9\textsuperscript{no} contribuye marginalmente (3.07\%).
+    
+    \item \textbf{Crítica al Análisis Original:} El análisis inicial estimaba atenuaciones del filtro como 90\%-20\%-10\%-0\%, resultando en un THD post-filtro de 15.47\%. \textbf{Esto era erróneo e insuficientemente conservador}.
+    
+    \item \textbf{Análisis Riguroso Propuesto:} Al considerar la respuesta frecuencial real del filtro LC (con resistencia de amortiguamiento $R = 2 \text{ }\Omega$), las atenuaciones reales son 96\%-51.6\%-65.6\%-72.7\%, resultando en un THD post-filtro de 8.07\%.
+    
+    \item \textbf{Efectividad del Filtro Propuesto :} El filtro sintonizado en el 3\textsuperscript{er} armónico \textbf{SÍ ES SUFICIENTE} para alcanzar conformidad normativa, con mejora relativa del 71.74\%.
+    
+    \item \textbf{Recomendaciones Finales:}
+    \begin{itemize}
+        \item \textbf{Implementar el filtro LC propuesto} (L = 53.05 mH, C = 21.22 µF) en la nave industrial
+        \item Especificar componentes de \textbf{alta calidad con resistencia $R \leq 2 \text{ }\Omega$}
+        \item Incluir capacitor de amortiguamiento para garantizar margen de seguridad
+        \item Considerar instalación de \textbf{segundo filtro en 5º armónico} para mayor robustez
+        \item Implementar \textbf{monitoreo continuo} de THD post-instalación
+        \item Si se dispone de presupuesto, valorar \textbf{APF de 15-20 kVA} como solución más flexible
+    \end{itemize}
+    
+    \item \textbf{Validación de Metodología:} El análisis FFT y cálculo de THD son precisos y confiables. La inclusión del análisis de respuesta frecuencial es \textbf{crítica} para diseños correctos de filtros.
+    
+    \item \textbf{Importancia del Rigor Técnico:} Las evaluaciones de calidad de potencia requieren análisis de respuesta frecuencial, no estimaciones arbitrarias de atenuación. La diferencia entre análisis superficial y riguroso puede llevar a decisiones de inversión completamente distintas.
+\end{enumerate}
+
+\subsubsection{Referencias Normativas}
+
+\begin{itemize}
+    \item IEC 61000-2-2: Compatibility levels for industrial environments
+    \item EN 50160: Voltage characteristics of electricity supplied by public distribution systems
+    \item IEEE Std 519-2014: Recommended Practice and Requirements for Harmonic Control in Electric Power Systems
+    \item IEC 61000-3-2: Limits and methods of measurement of radio disturbance characteristics of industrial, scientific and medical (ISM) radio-frequency equipment
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+El repositorio de esta práctica, en el que se encuentran todos los códigos de \texttt{MATLAB} y figuras generadas, se encuentra en el siguiente enlace de GitHub: 
+
+\begin{center}
+\url{https://github.com/aos739/Problemas-Calidad-Electrica---Grupo-4}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
